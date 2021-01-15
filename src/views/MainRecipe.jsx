@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ImageBackground} from "react-native";
-import {SafeAreaView} from "react-native";
+import {StyleSheet, Text, View, ImageBackground, Image} from "react-native";
+import {SafeAreaView, StatusBar} from "react-native";
 import {AntDesign, FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 
 class MainRecipe extends Component {
@@ -17,13 +17,16 @@ class MainRecipe extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ImageBackground style={styles.image}>
+                <StatusBar barStyle="light-content" />
+                <ImageBackground resizeMode= "cover"
+                                 style={styles.image}
+                                 source={require("../assets/images/tiramisu.jpg")}>
                     <SafeAreaView>
                         <View style={styles.menuBar}>
                             <View style={styles.back}>
-                                <AntDesign name="arrowleft" size={22} color="#fff"></AntDesign>
+                                <AntDesign name="arrowleft" size={22} color="#fff"/>
                             </View>
-                            <AntDesign name="download" size={22} color="#fff"></AntDesign>
+                            <AntDesign name="download" size={22} color="#fff"/>
                         </View>
                         <View style={styles.mainRecipe}>
                             <Text style={styles.text}>Most Practical and Softest Tiramisu</Text>
@@ -33,14 +36,15 @@ class MainRecipe extends Component {
                 <View style={styles.bookmarkContainer}>
                     <View sytyle={styles.columnContainer}>
                         <View style={styles.rowContainer}>
-                            <FontAwesome name="bookmark-o" size={18}></FontAwesome>
+                            <FontAwesome name="bookmark-o" size={18}/>
                             <Text style={{fontSize: 13, paddingLeft: 5}}>115 added</Text>
                         </View>
                         <Text style={{fontSize: 13, color: "#fa724c"}}>You add too!</Text>
                     </View>
                     <View sytyle={styles.columnContainer}>
                         <View style={styles.rowContainer}>
-                            <FontAwesome name="user-circle" size={24} color="#808080"></FontAwesome>
+                            <Image style={styles.userImage}
+                                   source={require("../assets/images/user.png")}/>
                             <Text style={{paddingLeft: 5}}>Joss Sticks</Text>
                         </View>
                         <View style={styles.rowContainer}>
@@ -52,7 +56,7 @@ class MainRecipe extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={styles.horizontalDivider}></View>
+                <View style={styles.horizontalDivider}/>
                 <View style={styles.descriptionText}>
                     <Text style={{color: "#99a2ab", marginBottom: 10,  fontSize: 13}}>21 March 2019{"\n"} {"\n"}Aliquam tinicidunt leo eu aliquam pretium. Donec
                         in risus arcu. Aliq uam
@@ -64,12 +68,12 @@ class MainRecipe extends Component {
                             <FontAwesome5 name="user-circle" size={18} color="#fa724c"/>
                             <Text style={{fontWeight: "600", marginTop: 5}}>8-12</Text>
                         </View>
-                        <View style={styles.verticalDivider}></View>
+                        <View style={styles.verticalDivider}/>
                         <View style={styles.columnContainer}>
                             <MaterialCommunityIcons name="rice" size={18} color="#fa724c"/>
                             <Text style={{fontWeight: "600", marginTop: 5}}>20 min</Text>
                         </View>
-                        <View style={styles.verticalDivider}></View>
+                        <View style={styles.verticalDivider}/>
                         <View style={styles.columnContainer}>
                             <FontAwesome name="fire" size={18} color="#fa724c"/>
                             <Text style={{fontWeight: "600", marginTop: 5}}>25 min</Text>
@@ -77,7 +81,7 @@ class MainRecipe extends Component {
                     </View>
                 </View>
 
-                <View style={styles.horizontalDivider}></View>
+                <View style={styles.horizontalDivider}/>
                 <View style={styles.descriptionText}>
                     <Text style={{fontSize: 15, fontWeight: "600", marginBottom: 10}}>Ingredients</Text>
                     <Text>{this.renderBulletRow("255 g kidney beans")}</Text>
@@ -101,6 +105,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "600",
         color: "#fff",
+        backgroundColor: 'rgba(52, 52, 52, 0.4)',
     },
     descriptionText: {
         marginTop: 20,
@@ -110,7 +115,10 @@ const styles = StyleSheet.create({
     },
     image: {
         width: "100%",
-        backgroundColor: "#C8C8C8",
+    },
+    userImage:{
+        width: 24,
+        height: 24,
     },
     menuBar: {
         flexDirection: "row",
