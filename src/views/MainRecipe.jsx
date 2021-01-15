@@ -1,98 +1,96 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, ImageBackground, Image} from "react-native";
-import {SafeAreaView, StatusBar} from "react-native";
+import React from 'react';
+import {StyleSheet, Text, View, ImageBackground, Image, SafeAreaView, StatusBar} from "react-native";
 import {AntDesign, FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 
-class MainRecipe extends Component {
 
-    renderBulletRow(data) {
-        return (
-            <View style={{flexDirection: 'row', marginBottom: 5}}>
-                <Text style={{color: "#fa724c"}}>{'\u2022'}</Text>
-                <Text style={{paddingLeft: 5, color: "#99a2ab", fontSize: 13}}>{data}</Text>
-            </View>
-        );
-    }
+const renderBulletRow = (data) => {
+    return (
+        <View style={{flexDirection: 'row', marginBottom: 5}}>
+            <Text style={{color: "#fa724c"}}>{'\u2022'}</Text>
+            <Text style={{paddingLeft: 5, color: "#99a2ab", fontSize: 13}}>{data.ingredient}</Text>
+        </View>
+    );
+}
 
-    render() {
+function MainRecipe() {
         return (
             <View style={styles.container}>
-                <StatusBar barStyle="light-content" />
-                <ImageBackground resizeMode= "cover"
-                                 style={styles.image}
-                                 source={require("../assets/images/tiramisu.jpg")}>
-                    <SafeAreaView>
-                        <View style={styles.menuBar}>
-                            <View style={styles.back}>
-                                <AntDesign name="arrowleft" size={22} color="#fff"/>
+                <View style={styles.upperContainer}>
+                    <StatusBar barStyle="light-content" />
+                    <ImageBackground resizeMode= "cover"
+                                    style={styles.image}
+                                    source={require("../../assets/images/tiramisu.jpg")}>
+                        <SafeAreaView>
+                            <View style={styles.menuBar}>
+                                <View style={styles.back}>
+                                    <AntDesign name="arrowleft" size={22} color="#fff"/>
+                                </View>
+                                <AntDesign name="download" size={22} color="#fff"/>
                             </View>
-                            <AntDesign name="download" size={22} color="#fff"/>
-                        </View>
+                        </SafeAreaView>
                         <View style={styles.mainRecipe}>
                             <Text style={styles.text}>Most Practical and Softest Tiramisu</Text>
                         </View>
-                    </SafeAreaView>
-                </ImageBackground>
-                <View style={styles.bookmarkContainer}>
-                    <View sytyle={styles.columnContainer}>
-                        <View style={styles.rowContainer}>
-                            <FontAwesome name="bookmark-o" size={18}/>
-                            <Text style={{fontSize: 13, paddingLeft: 5}}>115 added</Text>
-                        </View>
-                        <Text style={{fontSize: 13, color: "#fa724c"}}>You add too!</Text>
-                    </View>
-                    <View sytyle={styles.columnContainer}>
-                        <View style={styles.rowContainer}>
-                            <Image style={styles.userImage}
-                                   source={require("../assets/images/user.png")}/>
-                            <Text style={{paddingLeft: 5}}>Joss Sticks</Text>
-                        </View>
-                        <View style={styles.rowContainer}>
-                            <MaterialIcons name="star-rate" size={18} color="#fa724c"/>
-                            <MaterialIcons name="star-rate" size={18} color="#fa724c"/>
-                            <MaterialIcons name="star-rate" size={18} color="#fa724c"/>
-                            <MaterialIcons name="star-rate" size={18} color="#fa724c"/>
-                            <MaterialIcons name="star-border" size={18} color="#fa724c"/>
-                        </View>
-                    </View>
+                    </ImageBackground>
                 </View>
-                <View style={styles.horizontalDivider}/>
-                <View style={styles.descriptionText}>
-                    <Text style={{color: "#99a2ab", marginBottom: 10,  fontSize: 13}}>21 March 2019{"\n"} {"\n"}Aliquam tinicidunt leo eu aliquam pretium. Donec
-                        in risus arcu. Aliq uam
-                        quis trist ique nisi, quis viver ra tortor. Donesc mauris orci, max imus ac tortor in accumsan
-                        quis, ullamcorper eget velit.
-                    </Text>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.columnContainer}>
-                            <FontAwesome5 name="user-circle" size={18} color="#fa724c"/>
-                            <Text style={{fontWeight: "600", marginTop: 5}}>8-12</Text>
+                <View style={styles.recipeContainer}>
+                    <View style={styles.bookmarkContainer}>
+                        <View sytyle={styles.columnContainer}>
+                            <View style={styles.rowContainer}>
+                                <FontAwesome name="bookmark-o" size={18}/>
+                                <Text style={{fontSize: 13, paddingLeft: 5}}>115 added</Text>
+                            </View>
+                            <Text style={{fontSize: 13, color: "#fa724c"}}>You add too!</Text>
                         </View>
-                        <View style={styles.verticalDivider}/>
-                        <View style={styles.columnContainer}>
-                            <MaterialCommunityIcons name="rice" size={18} color="#fa724c"/>
-                            <Text style={{fontWeight: "600", marginTop: 5}}>20 min</Text>
-                        </View>
-                        <View style={styles.verticalDivider}/>
-                        <View style={styles.columnContainer}>
-                            <FontAwesome name="fire" size={18} color="#fa724c"/>
-                            <Text style={{fontWeight: "600", marginTop: 5}}>25 min</Text>
+                        <View sytyle={styles.columnContainer}>
+                            <View style={styles.rowContainer}>
+                                <Image style={styles.userImage}
+                                       source={require("../../assets/images/user.png")}/>
+                                <Text style={{paddingLeft: 5}}>Joss Sticks</Text>
+                            </View>
+                            <View style={styles.rowContainer}>
+                                <MaterialIcons name="star-rate" size={18} color="#fa724c"/>
+                                <MaterialIcons name="star-rate" size={18} color="#fa724c"/>
+                                <MaterialIcons name="star-rate" size={18} color="#fa724c"/>
+                                <MaterialIcons name="star-rate" size={18} color="#fa724c"/>
+                                <MaterialIcons name="star-border" size={18} color="#fa724c"/>
+                            </View>
                         </View>
                     </View>
-                </View>
-
-                <View style={styles.horizontalDivider}/>
-                <View style={styles.descriptionText}>
-                    <Text style={{fontSize: 15, fontWeight: "600", marginBottom: 10}}>Ingredients</Text>
-                    <Text>{this.renderBulletRow("255 g kidney beans")}</Text>
-                    <Text>{this.renderBulletRow("120 g maple syrup")}</Text>
-                    <Text>{this.renderBulletRow("75 g walnuts")}</Text>
-                    <Text>{this.renderBulletRow("1/2 tsp baking powder")}</Text>
-                    <Text>{this.renderBulletRow("3 eggs")}</Text>
+                    <View style={styles.horizontalDivider}/>
+                    <View style={styles.descriptionText}>
+                        <Text style={{color: "#99a2ab", marginBottom: 10,  fontSize: 13}}>21 March 2019{"\n"} {"\n"}Aliquam tinicidunt leo eu aliquam pretium. Donec
+                            in risus arcu. Aliq uam
+                            quis trist ique nisi, quis viver ra tortor. Donesc mauris orci, max imus ac tortor in accumsan
+                            quis, ullamcorper eget velit.
+                        </Text>
+                        <View style={styles.rowContainer}>
+                            <View style={styles.columnContainer}>
+                                <FontAwesome5 name="user-circle" size={18} color="#fa724c"/>
+                                <Text style={{fontWeight: "600", marginTop: 5}}>8-12</Text>
+                            </View>
+                            <View style={styles.verticalDivider}/>
+                            <View style={styles.columnContainer}>
+                                <MaterialCommunityIcons name="rice" size={18} color="#fa724c"/>
+                                <Text style={{fontWeight: "600", marginTop: 5}}>20 min</Text>
+                            </View>
+                            <View style={styles.verticalDivider}/>
+                            <View style={styles.columnContainer}>
+                                <FontAwesome name="fire" size={18} color="#fa724c"/>
+                                <Text style={{fontWeight: "600", marginTop: 5}}>25 min</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.horizontalDivider}/>
+                    <View style={styles.descriptionText}>
+                        <Text style={{fontSize: 15, fontWeight: "600", marginBottom: 10}}>Ingredients</Text>
+                        {["255 g kidney beans","120 g maple syrup","75 g walnuts","1/2 tsp baking powder","3 eggs"].map(ingredient =>
+                            renderBulletRow({ingredient})
+                        )}
+                    </View>
                 </View>
             </View>
         );
-    }
 }
 
 
@@ -100,6 +98,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+    },
+    upperContainer: {
+        flex: 2,
+    },
+    recipeContainer: {
+        flex: 3,
+        justifyContent: "space-between",
     },
     text: {
         fontSize: 18,
@@ -114,7 +119,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     image: {
-        width: "100%",
+        flex: 1,
+        justifyContent: "space-between",
     },
     userImage:{
         width: 24,
@@ -148,11 +154,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     columnContainer: {
+        flex: 1,
         flexDirection: "column",
         alignItems: "center",
-        marginTop: 10,
-        marginLeft: 10,
-        marginEnd: 10,
+
     },
     horizontalDivider: {
         borderBottomColor: "#ededed",
