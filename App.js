@@ -1,8 +1,8 @@
 import React from 'react';
-import MainRecipe from "./src/views/MainRecipe.jsx";
+import Navigator from "./src/navigators/navigator";
 
 export default function App() {
-  return <MainRecipe/>;
+  return (<Navigator/>);
 }
 
 
