@@ -48,6 +48,7 @@ export const mainRecipeStyle = StyleSheet.create({
         justifyContent: "space-between"
     },
     mainRecipe: {
+        width,
         marginBottom: "3%",
     },
     bookmarkContainer: {

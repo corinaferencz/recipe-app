@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, ImageBackground, Image, StatusBar, ScrollView} from "react-native";
 import {AntDesign, FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import {mainRecipeStyle as styles} from "./mainRecipe.style"
-import recipeDummyData from "../../DummyData/recipeDummyData";
+import recipeDummyData from "../../dummyData/recipeDummyData";
 
 function MainRecipe() {
     return (
@@ -51,23 +51,29 @@ function MainRecipe() {
                     </View>
                     <View style={styles.horizontalDivider}/>
                     <View style={styles.descriptionText}>
-                        <Text style={{color: "#99a2ab", marginBottom: 10, fontSize: 13}}>21 March 2019{"\n"} {"\n"}
+                        <Text style={{color: "#99a2ab", marginBottom: 10, fontSize: 13, textAlign:'justify'}}>21 March 2019{"\n"} {"\n"}
                             {recipeDummyData.contentText}
                         </Text>
                         <View style={styles.rowContainer}>
-                            <View style={styles.columnContainer}>
-                                <FontAwesome5 name="user-circle" size={18} color="#fa724c"/>
-                                <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData.noOfServings}</Text>
+                            <View stype={{flex: 1, alignItems: "flex-start"}}>
+                                <View style={styles.columnContainer}>
+                                    <FontAwesome5 name="user-circle" size={18} color="#fa724c"/>
+                                    <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData.noOfServings}</Text>
+                                </View>
                             </View>
                             <View style={styles.verticalDivider}/>
-                            <View style={styles.columnContainer}>
-                                <MaterialCommunityIcons name="rice" size={18} color="#fa724c"/>
-                                <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData.preparationTime}</Text>
+                            <View stype={{flex: 1, alignItems: "center"}}>
+                                <View style={styles.columnContainer}>
+                                    <MaterialCommunityIcons name="rice" size={18} color="#fa724c"/>
+                                    <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData.preparationTime}</Text>
+                                </View>
                             </View>
                             <View style={styles.verticalDivider}/>
-                            <View style={styles.columnContainer}>
-                                <FontAwesome name="fire" size={18} color="#fa724c"/>
-                                <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData.cookingTime}</Text>
+                            <View stype={{flex: 1, alignItems: "flex-end"}}>
+                                <View style={styles.columnContainer}>
+                                    <FontAwesome name="fire" size={18} color="#fa724c"/>
+                                    <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData.cookingTime}</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
