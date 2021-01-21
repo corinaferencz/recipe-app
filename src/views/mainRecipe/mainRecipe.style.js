@@ -34,22 +34,10 @@ export const mainRecipeStyle = StyleSheet.create({
         width: 24,
         height: 24,
     },
-    menuBar: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        padding: 16,
-    },
-    back: {
-        flexDirection: "row",
-        alignItems: "center",
-    },
-    headerContainer: {
-        flex: 1,
-        justifyContent: "space-between"
-    },
     mainRecipe: {
         width,
-        marginBottom: "3%",
+        position: 'absolute',
+        bottom: '3%',
     },
     bookmarkContainer: {
         flexDirection: "row",
