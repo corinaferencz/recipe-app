@@ -1,21 +1,9 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import MainRecipe from "../views/mainRecipe/MainRecipe";
 import {createStackNavigator} from "@react-navigation/stack";
-import {Text, Button, View} from 'react-native';
 import {AntDesign} from "@expo/vector-icons";
-
-function HomeScreen({ navigation }) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen</Text>
-            <Button
-                title="Go to Main Recipe"
-                onPress={() => navigation.navigate('MainRecipe')}
-            />
-        </View>
-    );
-}
+import MainRecipe from "../views/mainRecipe/MainRecipe";
+import HomeView from "../views/homeView/HomeView";
 
 const Stack = createStackNavigator();
 
@@ -23,7 +11,7 @@ export default function Navigator() {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen}/>
+                <Stack.Screen name="Home" component={HomeView}/>
                 <Stack.Screen name="MainRecipe"
                               component={MainRecipe}
                               options={{
