@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, ImageBackground, Image, StatusBar, ScrollView} from "react-native";
-import {AntDesign, FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
+import {FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import {mainRecipeStyle as styles} from "./mainRecipe.style"
 import recipeDummyData from "../../dummyData/recipeDummyData";
 
@@ -12,16 +12,8 @@ function MainRecipe() {
                 <ImageBackground resizeMode="cover"
                                  style={styles.image}
                                  source={require("../../../assets/images/tiramisu.jpg")}>
-                    <View style={styles.headerContainer}>
-                        <View style={styles.menuBar}>
-                            <View style={styles.back}>
-                                <AntDesign name="arrowleft" size={22} color="#fff"/>
-                            </View>
-                            <AntDesign name="download" size={22} color="#fff"/>
-                        </View>
-                        <View style={styles.mainRecipe}>
-                            <Text style={[styles.text]}>{recipeDummyData.headerTitle}</Text>
-                        </View>
+                    <View style={styles.mainRecipe}>
+                        <Text style={[styles.text]}>{recipeDummyData.headerTitle}</Text>
                     </View>
                 </ImageBackground>
             </View>
