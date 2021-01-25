@@ -1,19 +1,20 @@
 import React from 'react';
 import {Text, View, ImageBackground, Image, StatusBar, ScrollView} from "react-native";
 import {FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
-import {mainRecipeStyle as styles} from "./mainRecipe.style"
-import recipeDummyData from "../../dummyData/recipeDummyData";
+import {mainRecipeStyle as styles} from "./MainRecipe.style"
+import recipeDummyData from "../../DummyData/recipeDummyData";
 
-function MainRecipe() {
+function MainRecipe({route}) {
+    const {itemIndex} = route?.params || {};
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content"/>
             <View style={styles.upperContainer}>
                 <ImageBackground resizeMode="cover"
                                  style={styles.image}
-                                 source={require("../../../assets/images/tiramisu.jpg")}>
+                                 source={{uri: recipeDummyData[itemIndex].imgUri}}>
                     <View style={styles.mainRecipe}>
-                        <Text style={[styles.text]}>{recipeDummyData.headerTitle}</Text>
+                        <Text style={[styles.text]}>{recipeDummyData[itemIndex].headerTitle}</Text>
                     </View>
                 </ImageBackground>
             </View>
@@ -24,7 +25,7 @@ function MainRecipe() {
                             <View style={styles.rowContainer}>
                                 <FontAwesome name="bookmark-o" size={18}/>
                                 <Text
-                                    style={{fontSize: 13, paddingLeft: 5}}>{recipeDummyData.noOfBookmarks} added</Text>
+                                    style={{fontSize: 13, paddingLeft: 5}}>{recipeDummyData[itemIndex].noOfBookmarks} added</Text>
                             </View>
                             <Text style={{fontSize: 13, color: "#fa724c"}}>You add too!</Text>
                         </View>
@@ -32,10 +33,10 @@ function MainRecipe() {
                             <View style={styles.rowContainer}>
                                 <Image style={styles.userImage}
                                        source={require("../../../assets/images/user.png")}/>
-                                <Text style={{paddingLeft: 5}}>{recipeDummyData.creatorName}</Text>
+                                <Text style={{paddingLeft: 5}}>{recipeDummyData[itemIndex].creatorName}</Text>
                             </View>
                             <View style={styles.rowContainer}>
-                                {new Array(5).fill(false).fill(true, 0, recipeDummyData.noOfStars)
+                                {new Array(5).fill(false).fill(true, 0, recipeDummyData[itemIndex].noOfStars)
                                     .map(e => <MaterialIcons name={e === true ? "star-rate" : "star-border"} size={18}
                                                              color="#fa724c"/>)}
                             </View>
@@ -44,27 +45,27 @@ function MainRecipe() {
                     <View style={styles.horizontalDivider}/>
                     <View style={styles.descriptionText}>
                         <Text style={{color: "#99a2ab", marginBottom: 10, fontSize: 13, textAlign:'justify'}}>21 March 2019{"\n"} {"\n"}
-                            {recipeDummyData.contentText}
+                            {recipeDummyData[itemIndex].contentText}
                         </Text>
                         <View style={styles.rowContainer}>
                             <View stype={{flex: 1, alignItems: "flex-start"}}>
                                 <View style={styles.columnContainer}>
                                     <FontAwesome5 name="user-circle" size={18} color="#fa724c"/>
-                                    <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData.noOfServings}</Text>
+                                    <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData[itemIndex].noOfServings}</Text>
                                 </View>
                             </View>
                             <View style={styles.verticalDivider}/>
                             <View stype={{flex: 1, alignItems: "center"}}>
                                 <View style={styles.columnContainer}>
                                     <MaterialCommunityIcons name="rice" size={18} color="#fa724c"/>
-                                    <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData.preparationTime}</Text>
+                                    <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData[itemIndex].preparationTime}</Text>
                                 </View>
                             </View>
                             <View style={styles.verticalDivider}/>
                             <View stype={{flex: 1, alignItems: "flex-end"}}>
                                 <View style={styles.columnContainer}>
                                     <FontAwesome name="fire" size={18} color="#fa724c"/>
-                                    <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData.cookingTime}</Text>
+                                    <Text style={{fontWeight: "600", marginTop: 5}}>{recipeDummyData[itemIndex].cookingTime}</Text>
                                 </View>
                             </View>
                         </View>
@@ -72,7 +73,7 @@ function MainRecipe() {
                     <View style={styles.horizontalDivider}/>
                     <View style={styles.descriptionText}>
                         <Text style={{fontSize: 15, fontWeight: "600", marginBottom: 10}}>Ingredients</Text>
-                        {recipeDummyData.ingredients.map(ingredient => (<RenderBulletRow ingredient={ingredient}/>))}
+                        {recipeDummyData[itemIndex].ingredients.map(ingredient => (<RenderBulletRow ingredient={ingredient}/>))}
                     </View>
                 </ScrollView>
             </View>
