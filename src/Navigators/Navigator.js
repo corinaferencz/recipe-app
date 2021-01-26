@@ -2,8 +2,8 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from "@react-navigation/stack";
 import {AntDesign} from "@expo/vector-icons";
-import MainRecipe from "../views/mainRecipe/MainRecipe";
-import HomeView from "../views/homeView/HomeView";
+import MainRecipe from "../Views/MainRecipe";
+import HomeView from "../Views/HomeView";
 
 const Stack = createStackNavigator();
 
