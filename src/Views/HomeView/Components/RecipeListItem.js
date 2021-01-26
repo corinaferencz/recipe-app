@@ -5,10 +5,10 @@ import {FontAwesome, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-i
 
 const RecipeListItem = ({
                             item: {imgUri, headerTitle, noOfStars, preparationTime, cookingTime},
-                            onPress, onLongPress, itemIndex, setRecipes
+                            onPress, itemIndex, setRecipes
                         }) => {
 
-    function onLongPressDelete(e) {
+    function onLongPressDelete() {
         setRecipes((prevState) => {
             prevState.splice(itemIndex, 1);
             return prevState
