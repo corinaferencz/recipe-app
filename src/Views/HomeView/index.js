@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {TextInput, Text, View, FlatList, TouchableOpacity} from "react-native";
 import {homeViewStyles as styles} from "./HomeView.style"
-import {EvilIcons} from '@expo/vector-icons';
+import {EvilIcons, FontAwesome5} from '@expo/vector-icons';
 import recipeDummyData from "../../DummyData/recipeDummyData";
 import RecipeListItem from "./Components/RecipeListItem";
 
@@ -18,6 +18,12 @@ function HomeView({navigation}) {
             });
         setRecipes(result)
     }
+
+    const listEmptyComponent = () => (
+        <View style={styles.listEmptyContainer}>
+            <FontAwesome5 name="window-close" size={40} color="lightgray" />
+        </View>
+    );
 
     return (
         <View style={styles.container}>
@@ -36,6 +42,8 @@ function HomeView({navigation}) {
                                           key={item.id}
                                           onPress={() => navigation.navigate('MainRecipe', {itemIndex: index})}/>)}
                       keyExtractor={(item) => item.id}
+                      contentContainerStyle={{ flexGrow: 1 }}
+                      ListEmptyComponent={() => listEmptyComponent()}
             />
             <AddRecipeButton title="Add recipe"/>
         </View>

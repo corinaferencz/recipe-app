@@ -69,5 +69,11 @@ export const homeViewStyles = StyleSheet.create({
         fontWeight: "bold",
         alignSelf: "center",
         textTransform: "uppercase"
+    },
+    listEmptyContainer: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center"
     }
 });
