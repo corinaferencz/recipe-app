@@ -1,17 +1,17 @@
 import React from 'react';
-import {Text, View, ImageBackground, Image, StatusBar, ScrollView} from "react-native";
+import {Text, View, ImageBackground, Image, StatusBar, ScrollView, TextInput} from "react-native";
 import {FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import {mainRecipeStyle as styles} from "./MainRecipe.style"
-import recipeDummyData from "../../DummyData/recipeDummyData";
+import recipeStore from "../../Stores/RecipeStore";
 
 function MainRecipe({route}) {
 
-    const {newItem, itemIndex} = route?.params;
+    const {newItem, recipe} = route?.params;
 
     if (!!newItem) {
         console.log("Add New Recipe");
     } else {
-        
+
     }
 
     return (
@@ -22,9 +22,9 @@ function MainRecipe({route}) {
                     <View></View> :
                     <ImageBackground resizeMode="cover"
                                      style={styles.image}
-                                     source={{uri: recipeDummyData[itemIndex].imgUri}}>
+                                     source={{uri: recipe.imgUri}}>
                         <View style={styles.mainRecipe}>
-                            <Text style={[styles.text]}>{recipeDummyData[itemIndex].headerTitle}</Text>
+                            <Text style={[styles.text]}>{recipe?.headerTitle}</Text>
                         </View>
                     </ImageBackground>}
             </View>
@@ -38,7 +38,7 @@ function MainRecipe({route}) {
                                     style={{
                                         fontSize: 13,
                                         paddingLeft: 5
-                                    }}>{recipeDummyData[itemIndex].noOfBookmarks} added</Text>
+                                    }}>{recipe?.noOfBookmarks || 0} added</Text>
                             </View>
                             <Text style={{fontSize: 13, color: "#fa724c"}}>You add too!</Text>
                         </View>
@@ -46,10 +46,12 @@ function MainRecipe({route}) {
                             <View style={styles.rowContainer}>
                                 <Image style={styles.userImage}
                                        source={require("../../../assets/images/user.png")}/>
-                                <Text style={{paddingLeft: 5}}>{recipeDummyData[itemIndex].creatorName}</Text>
+                                <Text
+                                    style={{paddingLeft: 5}}>{recipeStore.userDetails.firstName + " " + recipeStore.userDetails.surname}</Text>
                             </View>
                             <View style={styles.rowContainer}>
-                                {new Array(5).fill(false).fill(true, 0, recipeDummyData[itemIndex].noOfStars)
+                                {new Array(5).fill(false)
+                                    .fill(true, 0, recipe?.noOfStars || 0)
                                     .map(e => <MaterialIcons name={e === true ? "star-rate" : "star-border"} size={18}
                                                              color="#fa724c"/>)}
                             </View>
@@ -57,10 +59,14 @@ function MainRecipe({route}) {
                     </View>
                     <View style={styles.horizontalDivider}/>
                     <View style={styles.descriptionText}>
-                        <Text style={{color: "#99a2ab", marginBottom: 10, fontSize: 13, textAlign: 'justify'}}>21 March
+                        {/* TO DO : Separate in two text components and import and format the dat from recipe.originalPostDate*/}
+                        <Text style={{color: "#99a2ab", marginBottom: 10, fontSize: 13, textAlign: 'justify'}}>21
+                            March
                             2019{"\n"} {"\n"}
-                            {recipeDummyData[itemIndex].contentText}
+                            {recipe?.contentText}
                         </Text>
+                        {/*https://reactnative.dev/docs/textinput*/}
+                        {recipe?.contentText ? <Text>{recipe?.contentText}</Text> : <TextInput></TextInput>}
                         <View style={styles.rowContainer}>
                             <View stype={{flex: 1, alignItems: "flex-start"}}>
                                 <View style={styles.columnContainer}>
@@ -68,7 +74,7 @@ function MainRecipe({route}) {
                                     <Text style={{
                                         fontWeight: "600",
                                         marginTop: 5
-                                    }}>{recipeDummyData[itemIndex].noOfServings}</Text>
+                                    }}>{recipe?.noOfServings}</Text>
                                 </View>
                             </View>
                             <View style={styles.verticalDivider}/>
@@ -78,7 +84,7 @@ function MainRecipe({route}) {
                                     <Text style={{
                                         fontWeight: "600",
                                         marginTop: 5
-                                    }}>{recipeDummyData[itemIndex].preparationTime}</Text>
+                                    }}>{recipe?.preparationTime}</Text>
                                 </View>
                             </View>
                             <View style={styles.verticalDivider}/>
@@ -88,7 +94,7 @@ function MainRecipe({route}) {
                                     <Text style={{
                                         fontWeight: "600",
                                         marginTop: 5
-                                    }}>{recipeDummyData[itemIndex].cookingTime}</Text>
+                                    }}>{recipe?.cookingTime}</Text>
                                 </View>
                             </View>
                         </View>
@@ -96,7 +102,7 @@ function MainRecipe({route}) {
                     <View style={styles.horizontalDivider}/>
                     <View style={styles.descriptionText}>
                         <Text style={{fontSize: 15, fontWeight: "600", marginBottom: 10}}>Ingredients</Text>
-                        {recipeDummyData[itemIndex].ingredients.map(ingredient => (
+                        {recipe?.ingredients?.map(ingredient => (
                             <RenderBulletRow ingredient={ingredient}/>))}
                     </View>
                 </ScrollView>
