@@ -45,7 +45,7 @@ function HomeView({navigation}) {
                       contentContainerStyle={{ flexGrow: 1 }}
                       ListEmptyComponent={() => listEmptyComponent()}
             />
-            <AddRecipeButton title="Add recipe"/>
+            <AddRecipeButton title="Add recipe" onPress={() => navigation.push('MainRecipe', {newItem: true})}/>
         </View>
     );
 }
