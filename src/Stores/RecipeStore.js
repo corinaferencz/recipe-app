@@ -11,4 +11,8 @@ class RecipeStore {
 
 const recipeStore = new RecipeStore(recipesList);
 
-export default recipeStore;
+const addItem = (item) => {
+    recipesList.push(item);
+}
+
+export default recipeStore; addItem();

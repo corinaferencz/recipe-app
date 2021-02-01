@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, ImageBackground, Image, StatusBar, ScrollView, TextInput} from "react-native";
 import {FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import {mainRecipeStyle as styles} from "./MainRecipe.style"
@@ -7,6 +7,14 @@ import recipeStore from "../../Stores/RecipeStore";
 function MainRecipe({route}) {
 
     const {newItem, recipe} = route?.params;
+
+    const [state, setState] = useState({uri: "", title:""});
+    const [context, setContext] = useState({context: ""});
+
+    function textChangeHandler(e){
+        //setContext({...prevState, context: prevState});
+        setContext(e);
+    }
 
     if (!!newItem) {
         console.log("Add New Recipe");
@@ -58,15 +66,18 @@ function MainRecipe({route}) {
                         </View>
                     </View>
                     <View style={styles.horizontalDivider}/>
-                    <View style={styles.descriptionText}>
-                        {/* TO DO : Separate in two text components and import and format the dat from recipe.originalPostDate*/}
-                        <Text style={{color: "#99a2ab", marginBottom: 10, fontSize: 13, textAlign: 'justify'}}>21
-                            March
-                            2019{"\n"} {"\n"}
-                            {recipe?.contentText}
+                    <View style={styles.sectionContainer}>
+                        <Text style={styles.descriptionText}>
+                            {recipe?.originalPostDate ?
+                                new Date(recipe?.originalPostDate).toUTCString() :
+                                new Date().toUTCString()}
                         </Text>
-                        {/*https://reactnative.dev/docs/textinput*/}
-                        {recipe?.contentText ? <Text>{recipe?.contentText}</Text> : <TextInput></TextInput>}
+                        {recipe?.contentText ?
+                            <Text style={styles.descriptionText}>{recipe?.contentText}</Text> :
+                            <TextInput style={styles.descriptionText}
+                                       placeholder={"Write the description here"}
+                                       onChangeText={textChangeHandler}
+                            />}
                         <View style={styles.rowContainer}>
                             <View stype={{flex: 1, alignItems: "flex-start"}}>
                                 <View style={styles.columnContainer}>
@@ -74,7 +85,7 @@ function MainRecipe({route}) {
                                     <Text style={{
                                         fontWeight: "600",
                                         marginTop: 5
-                                    }}>{recipe?.noOfServings}</Text>
+                                    }}>{recipe?.noOfServings || 0}</Text>
                                 </View>
                             </View>
                             <View style={styles.verticalDivider}/>
@@ -84,7 +95,7 @@ function MainRecipe({route}) {
                                     <Text style={{
                                         fontWeight: "600",
                                         marginTop: 5
-                                    }}>{recipe?.preparationTime}</Text>
+                                    }}>{recipe?.preparationTime || 0}</Text>
                                 </View>
                             </View>
                             <View style={styles.verticalDivider}/>
@@ -94,13 +105,13 @@ function MainRecipe({route}) {
                                     <Text style={{
                                         fontWeight: "600",
                                         marginTop: 5
-                                    }}>{recipe?.cookingTime}</Text>
+                                    }}>{recipe?.cookingTime || 0}</Text>
                                 </View>
                             </View>
                         </View>
                     </View>
                     <View style={styles.horizontalDivider}/>
-                    <View style={styles.descriptionText}>
+                    <View style={styles.sectionContainer}>
                         <Text style={{fontSize: 15, fontWeight: "600", marginBottom: 10}}>Ingredients</Text>
                         {recipe?.ingredients?.map(ingredient => (
                             <RenderBulletRow ingredient={ingredient}/>))}
