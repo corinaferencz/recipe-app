@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, ImageBackground, Image, StatusBar, ScrollView, TextInput, TouchableOpacity, Button} from "react-native";
 import {FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons, SimpleLineIcons} from "@expo/vector-icons";
 import {mainRecipeStyle as styles} from "./MainRecipe.style"
@@ -28,6 +28,10 @@ function MainRecipe({route}) {
             setState({...state, imgUri: result.uri});
         }
     };
+
+    useEffect(() => {
+        console.log(recipeStore.recipes);
+    })
 
     return (
         <View style={styles.container}>
@@ -143,8 +147,8 @@ function MainRecipe({route}) {
                     </View>
                 </ScrollView>
                 {newItem ?
-                    <Button title={"Save recipe"} onPress={recipeStore.addItem(state)}/> :
-                    console.log("")
+                    <Button title={"Save recipe"} onPress={e=>recipeStore.addItem(state)}/> :
+                    null
                 }
             </View>
         </View>
