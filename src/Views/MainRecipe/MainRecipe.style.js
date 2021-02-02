@@ -34,7 +34,10 @@ export const mainRecipeStyle = StyleSheet.create({
     },
     image: {
         width,
-        height: "100%"
+        height: "100%",
+        backgroundColor: "lightgray",
+        alignItems: "center",
+        justifyContent: "center"
     },
     userImage:{
         width: 24,

@@ -1,33 +1,58 @@
 import React, {useState} from 'react';
-import {Text, View, ImageBackground, Image, StatusBar, ScrollView, TextInput} from "react-native";
-import {FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
+import {Text, View, ImageBackground, Image, StatusBar, ScrollView, TextInput, TouchableOpacity, Button} from "react-native";
+import {FontAwesome, MaterialIcons, FontAwesome5, MaterialCommunityIcons, SimpleLineIcons} from "@expo/vector-icons";
 import {mainRecipeStyle as styles} from "./MainRecipe.style"
 import recipeStore from "../../Stores/RecipeStore";
+import * as ImagePicker from 'expo-image-picker';
 
 function MainRecipe({route}) {
 
     const {newItem, recipe} = route?.params;
 
-    const [state, setState] = useState({uri: "", title:""});
-    const [context, setContext] = useState({context: ""});
+    const [image, setImage] = useState(null);
 
-    function textChangeHandler(e){
-        //setContext({...prevState, context: prevState});
-        setContext(e);
-    }
+    const [state, setState] = useState({imgUri: "", headerTitle:"", contentText: ""});
 
-    if (!!newItem) {
-        console.log("Add New Recipe");
-    } else {
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
 
-    }
+        console.log(result);
+
+        if (!result.cancelled) {
+            setImage(result.uri);
+            setState({...state, imgUri: result.uri});
+        }
+    };
 
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content"/>
             <View style={styles.upperContainer}>
                 {newItem ?
-                    <View></View> :
+                    <View style={styles.image}>
+                        {image ?
+                            <ImageBackground resizeMode="cover"
+                                             style={styles.image}
+                                             source={{ uri: image }}>
+                                <View style={styles.mainRecipe}>
+                                    <TextInput style={styles.text}
+                                            placeholder={"Add Title"}
+                                            onChangeText = {e=>setState({...state, headerTitle:e})}
+                                    />
+                                </View>
+                            </ImageBackground>:
+                            <TouchableOpacity onPress={pickImage}>
+                                <View>
+                                    <SimpleLineIcons name="picture" size={48} color="gray" />
+                                </View>
+                            </TouchableOpacity>
+                        }
+                    </View> :
                     <ImageBackground resizeMode="cover"
                                      style={styles.image}
                                      source={{uri: recipe.imgUri}}>
@@ -76,7 +101,7 @@ function MainRecipe({route}) {
                             <Text style={styles.descriptionText}>{recipe?.contentText}</Text> :
                             <TextInput style={styles.descriptionText}
                                        placeholder={"Write the description here"}
-                                       onChangeText={textChangeHandler}
+                                       onChangeText = {e=>setState({...state,contentText:e})}
                             />}
                         <View style={styles.rowContainer}>
                             <View stype={{flex: 1, alignItems: "flex-start"}}>
@@ -117,6 +142,10 @@ function MainRecipe({route}) {
                             <RenderBulletRow ingredient={ingredient}/>))}
                     </View>
                 </ScrollView>
+                {newItem ?
+                    <Button title={"Save recipe"} onPress={recipeStore.addItem(state)}/> :
+                    console.log("")
+                }
             </View>
         </View>
     );

@@ -4,6 +4,10 @@ class RecipeStore {
     userDetails = {firstName: "Corina", surname: "Ferencz"}
     recipes = [];
 
+    addItem = (item) => {
+        recipesList.push(item);
+    }
+
     constructor(recipes) {
         this.recipes = recipes;
     }
@@ -11,8 +15,4 @@ class RecipeStore {
 
 const recipeStore = new RecipeStore(recipesList);
 
-const addItem = (item) => {
-    recipesList.push(item);
-}
-
-export default recipeStore; addItem();
+export default recipeStore;
