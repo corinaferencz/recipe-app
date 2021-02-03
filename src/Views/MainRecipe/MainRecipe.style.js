@@ -20,15 +20,24 @@ export const mainRecipeStyle = StyleSheet.create({
         color: "#fff",
         backgroundColor: 'rgba(52, 52, 52, 0.4)',
     },
-    descriptionText: {
+    sectionContainer: {
         marginTop: 20,
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 10,
     },
+    descriptionText: {
+        color: "#99a2ab",
+        marginBottom: 10,
+        fontSize: 13,
+        textAlign: 'justify'
+    },
     image: {
         width,
-        height: "100%"
+        height: "100%",
+        backgroundColor: "lightgray",
+        alignItems: "center",
+        justifyContent: "center"
     },
     userImage:{
         width: 24,

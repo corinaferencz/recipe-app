@@ -10,8 +10,9 @@ const RecipeListItem = ({
 
     function onLongPressDelete() {
         setRecipes((prevState) => {
-            prevState.splice(itemIndex, 1);
-            return prevState
+            const newState = JSON.parse(JSON.stringify(prevState));
+            newState.splice(itemIndex, 1);
+            return newState
         })
     }
     return (
