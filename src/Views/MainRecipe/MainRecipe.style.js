@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from "react-native";
+import React from "react";
 
 export const { width, height } = Dimensions.get("window");
 
@@ -30,7 +31,12 @@ export const mainRecipeStyle = StyleSheet.create({
         color: "#99a2ab",
         marginBottom: 10,
         fontSize: 13,
-        textAlign: 'justify'
+        textAlign: 'justify',
+    },
+    isHighlighted: {
+        borderWidth: 1,
+        borderColor: "blue",
+        height: "50%",
     },
     image: {
         width,
