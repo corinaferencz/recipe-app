@@ -22,10 +22,14 @@ export const mainRecipeStyle = StyleSheet.create({
         backgroundColor: 'rgba(52, 52, 52, 0.4)',
     },
     sectionContainer: {
+        flex: 1,
         marginTop: 20,
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 10,
+    },
+    addIngredientTextInput: {
+        width: "100%",
     },
     descriptionText: {
         color: "#99a2ab",

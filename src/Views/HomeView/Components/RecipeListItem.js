@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {TouchableOpacity, Image, Text, View, StyleSheet} from "react-native";
 import {homeViewStyles as styles} from "../HomeView.style";
 import {FontAwesome, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
