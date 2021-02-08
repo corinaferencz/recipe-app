@@ -4,6 +4,10 @@ class RecipeStore {
     userDetails = {firstName: "Corina", surname: "Ferencz"}
     recipes = [];
 
+    addItem = (item) => {
+        recipesList.push(item);
+    }
+
     constructor(recipes) {
         this.recipes = recipes;
     }

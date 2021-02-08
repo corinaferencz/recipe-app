@@ -8,9 +8,10 @@ import recipeStore from "../../Stores/RecipeStore";
 
 function HomeView({navigation}) {
     const [recipes, setRecipes] = useState(recipeStore.recipes);
+    console.log(recipes);
 
     function inputOnChange(e) {
-        const result = recipeDummyData
+        const result = recipeStore.recipes
             .filter(({headerTitle}) => {
                 headerTitle = headerTitle.toUpperCase();
                 e = e.toUpperCase();
