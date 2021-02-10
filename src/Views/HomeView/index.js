@@ -43,7 +43,8 @@ function HomeView({navigation}) {
                                           key={item.id}
                                           onPress={() => navigation.navigate('MainRecipe', {
                                               itemIndex: index,
-                                              recipe: item
+                                              recipe: item,
+                                              key: 'MainRecipe'
                                           })}/>)}
                       keyExtractor={(item) => item.id}
                       contentContainerStyle={{flexGrow: 1}}

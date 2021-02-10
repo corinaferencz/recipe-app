@@ -29,6 +29,7 @@ export const homeViewStyles = StyleSheet.create({
         marginLeft: 10,
     },
     item: {
+        flex: 1,
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
