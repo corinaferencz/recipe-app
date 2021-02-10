@@ -2,13 +2,15 @@ import React, {useState, Fragment} from 'react';
 import {TouchableOpacity, Image, Text, View, StyleSheet} from "react-native";
 import {homeViewStyles as styles} from "../HomeView.style";
 import {FontAwesome, MaterialCommunityIcons, MaterialIcons, AntDesign} from "@expo/vector-icons";
+import {useNavigation} from "@react-navigation/core";
 
-const RecipeListItem = ({
-                            item: {imgUri, headerTitle, noOfStars, preparationTime, cookingTime, id},
-                            onPress, itemIndex, setRecipes
-                        }) => {
-
-    const [isPressed, setIsPressed] = useState({itemIndex: itemIndex,value: false});
+const RecipeListItem = ({item, onPress, itemIndex, setRecipes}) => {
+    const {
+        imgUri, headerTitle, noOfStars,
+        preparationTime, cookingTime, id
+    } = item;
+    const [isPressed, setIsPressed] = useState({itemIndex: itemIndex, value: false});
+    const {navigate} = useNavigation();
 
     function onDelete() {
         setRecipes((prevState) => {
@@ -18,11 +20,12 @@ const RecipeListItem = ({
         })
     }
 
-    console.log(itemIndex, isPressed);
     return (
         <Fragment key={id}>
             <View style={{flex: 1}}>
-                <TouchableOpacity onPress={onPress} onLongPress={() => {setIsPressed({...isPressed, value: true})}}
+                <TouchableOpacity onPress={onPress} onLongPress={() => {
+                    setIsPressed({...isPressed, value: true})
+                }}
                                   style={[styles.item, style.listItemContainer]}>
                     <Image style={styles.image} source={{uri: imgUri}}/>
                     <View style={styles.columnContainer}>
@@ -43,14 +46,18 @@ const RecipeListItem = ({
                             </View>
                         </View>
                     </View>
-                    { (isPressed.value) ?
+                    {(isPressed.value) ?
                         <View style={{
                             flexDirection: "row",
                             alignItems: "flex-end",
                             alignSelf: 'flex-start',
                             backgroundColor: "lightgray"
                         }}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                navigate('MainRecipe', {
+                                    itemIndex, recipe: item, editItem: true
+                                })
+                            }}>
                                 <AntDesign name="edit" size={24} color="gray"/>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={onDelete}>
