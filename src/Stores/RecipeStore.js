@@ -1,18 +1,25 @@
-import recipesList from "../DummyData/RecipeDummyData";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class RecipeStore {
     userDetails = {firstName: "Corina", surname: "Ferencz"}
     recipes = [];
 
-    addItem = (item) => {
-        recipesList.push(item);
+    constructor() {
+        AsyncStorage.getItem("recipeList").then((res) => {
+            this.recipes = JSON.parse(res) || []
+        })
     }
 
-    constructor(recipes) {
-        this.recipes = recipes;
+    addItem = (item) => {
+        this.recipes.push(item);
+        AsyncStorage.setItem("recipeList", JSON.stringify(this.recipes));
+    }
+
+    deleteItem = (item) => {
+
     }
 }
 
-const recipeStore = new RecipeStore(recipesList);
+const recipeStore = new RecipeStore();
 
 export default recipeStore;
