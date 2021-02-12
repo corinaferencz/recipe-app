@@ -16,7 +16,12 @@ class RecipeStore {
     }
 
     deleteItem = (item) => {
-
+        console.log(this.recipes.includes(item));
+        console.log(item);
+        let index = this.recipes.indexOf(item);
+        console.log("Index", index);
+        // this.recipes.splice(index, 1);
+        // AsyncStorage.setItem("recipeList", JSON.stringify(this.recipes));
     }
 }
 

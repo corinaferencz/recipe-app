@@ -157,7 +157,7 @@ function MainRecipe({route, navigation}) {
                                                    placeholder={"0 min"}
                                                    onSubmitEditing={e => setState({...state, preparationTime: e.nativeEvent.text})}
                                                    blurOnSubmit={true}
-                                        >{editItem ? state.preparationTime : "0 min"}</TextInput> :
+                                        >{editItem ? state.preparationTime : null}</TextInput> :
                                         <Text style={{
                                             fontWeight: "600",
                                             marginTop: 5
@@ -175,7 +175,7 @@ function MainRecipe({route, navigation}) {
                                                    placeholder={"0 min"}
                                                    onSubmitEditing={e => setState({...state, cookingTime: e.nativeEvent.text})}
                                                    blurOnSubmit={true}
-                                        >{editItem ? state.cookingTime : "0 min"}</TextInput> :
+                                        >{editItem ? state.cookingTime : null}</TextInput> :
                                         <Text style={{
                                             fontWeight: "600",
                                             marginTop: 5

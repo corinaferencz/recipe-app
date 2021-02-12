@@ -3,6 +3,7 @@ import {TouchableOpacity, Image, Text, View, StyleSheet} from "react-native";
 import {homeViewStyles as styles} from "../HomeView.style";
 import {FontAwesome, MaterialCommunityIcons, MaterialIcons, AntDesign} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/core";
+import recipeStore from "../../../Stores/RecipeStore";
 
 const RecipeListItem = ({item, onPress, itemIndex, setRecipes}) => {
     const {
@@ -15,7 +16,8 @@ const RecipeListItem = ({item, onPress, itemIndex, setRecipes}) => {
     function onDelete() {
         setRecipes((prevState) => {
             const newState = JSON.parse(JSON.stringify(prevState));
-            newState.splice(itemIndex, 1);
+            const deletedItem = newState.splice(itemIndex, 1);
+            deletedItem.map(item => recipeStore.deleteItem(item))
             return newState
         })
     }
