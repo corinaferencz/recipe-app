@@ -23,6 +23,7 @@ import {
 import {mainRecipeStyle as styles} from "./MainRecipe.style"
 import recipeStore from "../../Stores/RecipeStore";
 import * as ImagePicker from 'expo-image-picker';
+import {observer} from "mobx-react";
 
 function MainRecipe({route, navigation}) {
     const {newItem, recipe, editItem} = route?.params;
@@ -152,16 +153,19 @@ function MainRecipe({route, navigation}) {
                                 <View style={styles.columnContainer}>
                                     <MaterialCommunityIcons name="rice" size={18} color="#fa724c"/>
                                     {newItem || editItem ?
-                                        <TextInput style={{fontWeight: "600",
-                                            marginTop: 5}}
-                                                   placeholder={"0 min"}
+                                        <View style={{flexDirection: "row", marginTop: 5}}>
+                                        <TextInput style={{fontWeight: "600", marginRight: 5}}
+                                                   placeholder={"0"}
                                                    onSubmitEditing={e => setState({...state, preparationTime: e.nativeEvent.text})}
                                                    blurOnSubmit={true}
-                                        >{editItem ? state.preparationTime : null}</TextInput> :
+                                                   keyboardType={"numbers-and-punctuation"}
+                                        >{editItem ? state.preparationTime : null}</TextInput>
+                                            <Text>min</Text>
+                                        </View> :
                                         <Text style={{
                                             fontWeight: "600",
                                             marginTop: 5
-                                        }}>{recipe?.preparationTime || 0}</Text>
+                                        }}>{recipe?.preparationTime || 0} min</Text>
                                     }
                                 </View>
                             </View>
@@ -170,16 +174,20 @@ function MainRecipe({route, navigation}) {
                                 <View style={styles.columnContainer}>
                                     <FontAwesome name="fire" size={18} color="#fa724c"/>
                                     {newItem || editItem ?
-                                        <TextInput style={{fontWeight: "600",
-                                            marginTop: 5}}
-                                                   placeholder={"0 min"}
+                                        <View style={{flexDirection: "row", marginTop: 5}}>
+                                        <TextInput style={{fontWeight: "600", marginRight: 5}}
+                                                   placeholder={"0"}
                                                    onSubmitEditing={e => setState({...state, cookingTime: e.nativeEvent.text})}
                                                    blurOnSubmit={true}
-                                        >{editItem ? state.cookingTime : null}</TextInput> :
+                                                   keyboardType={"numbers-and-punctuation"}
+                                        >{editItem ? state.cookingTime : null}</TextInput>
+                                            <Text>min</Text>
+                                        </View>    :
                                         <Text style={{
                                             fontWeight: "600",
                                             marginTop: 5
-                                        }}>{recipe?.cookingTime || 0}</Text>}
+                                        }}>{recipe?.cookingTime || 0} min</Text>
+                                    }
                                 </View>
                             </View>
                         </View>
@@ -212,7 +220,7 @@ function MainRecipe({route, navigation}) {
                     <Button title={"Save recipe"} onPress={e => {
                         const {imgUri, contentText, headerTitle, ingredients} = {...state};
                         if (imgUri && contentText && headerTitle && ingredients.length) {
-                            recipeStore.addItem({...state});
+                            newItem ? recipeStore.addItem({...state}) : recipeStore.updateItem({...state});
                             navigation.goBack();
                         } else {
                             Alert.alert(
@@ -263,4 +271,4 @@ const RenderBulletRow = ({ingredient, state, setState, newItem, editItem}) => {
 }
 
 
-export default MainRecipe;
+export default observer(MainRecipe);

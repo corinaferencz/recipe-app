@@ -31,8 +31,6 @@ export const homeViewStyles = StyleSheet.create({
     item: {
         flex: 1,
         flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "center",
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,

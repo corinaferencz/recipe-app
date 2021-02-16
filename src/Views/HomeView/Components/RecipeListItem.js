@@ -4,6 +4,7 @@ import {homeViewStyles as styles} from "../HomeView.style";
 import {FontAwesome, MaterialCommunityIcons, MaterialIcons, AntDesign} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/core";
 import recipeStore from "../../../Stores/RecipeStore";
+import {observer} from "mobx-react";
 
 const RecipeListItem = ({item, onPress, itemIndex, setRecipes}) => {
     const {
@@ -16,15 +17,15 @@ const RecipeListItem = ({item, onPress, itemIndex, setRecipes}) => {
     function onDelete() {
         setRecipes((prevState) => {
             const newState = JSON.parse(JSON.stringify(prevState));
-            const deletedItem = newState.splice(itemIndex, 1);
-            deletedItem.map(item => recipeStore.deleteItem(item))
+            newState.splice(itemIndex, 1);
+            recipeStore.deleteItem(itemIndex);
             return newState
         })
     }
 
     return (
         <Fragment key={id}>
-            <View style={{flex: 1}}>
+            <View>
                 <TouchableOpacity onPress={onPress} onLongPress={() => {
                     setIsPressed({...isPressed, value: true})
                 }}
@@ -40,19 +41,19 @@ const RecipeListItem = ({item, onPress, itemIndex, setRecipes}) => {
                         <View style={styles.rowContainer}>
                             <View style={styles.food}>
                                 <MaterialCommunityIcons name="rice" size={18} color="#fa724c"/>
-                                <Text style={{fontWeight: "600", marginTop: 5}}>{preparationTime}</Text>
+                                <Text style={{fontWeight: "600", marginTop: 5}}>{preparationTime ? `${preparationTime} min` : `0 min`}</Text>
                             </View>
                             <View style={styles.food}>
                                 <FontAwesome name="fire" size={18} color="#fa724c"/>
-                                <Text style={{fontWeight: "600", marginTop: 5}}>{cookingTime}</Text>
+                                <Text style={{fontWeight: "600", marginTop: 5}}>{cookingTime ? `${cookingTime} min` : `0 min`}</Text>
                             </View>
                         </View>
                     </View>
                     {(isPressed.value) ?
                         <View style={{
+                            position: "absolute",
                             flexDirection: "row",
-                            alignItems: "flex-end",
-                            alignSelf: 'flex-start',
+                            right: 0,
                             backgroundColor: "lightgray"
                         }}>
                             <TouchableOpacity onPress={() => {
@@ -79,7 +80,7 @@ const RecipeListItem = ({item, onPress, itemIndex, setRecipes}) => {
     )
 };
 
-export default RecipeListItem
+export default observer(RecipeListItem);
 
 const style = StyleSheet.create({
     listItemContainer: {backgroundColor: "#fff"},

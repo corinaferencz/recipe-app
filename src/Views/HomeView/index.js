@@ -4,7 +4,7 @@ import {homeViewStyles as styles} from "./HomeView.style"
 import {EvilIcons, FontAwesome5} from '@expo/vector-icons';
 import RecipeListItem from "./Components/RecipeListItem";
 import recipeStore from "../../Stores/RecipeStore";
-
+import {observer} from "mobx-react";
 
 function HomeView({navigation}) {
     const [recipes, setRecipes] = useState(recipeStore.recipes);
@@ -60,4 +60,5 @@ const AddRecipeButton = ({onPress, title}) => (
     </TouchableOpacity>
 );
 
-export default HomeView;
+export default observer(HomeView);
+
