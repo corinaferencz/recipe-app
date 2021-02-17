@@ -4,12 +4,10 @@ import {homeViewStyles as styles} from "./HomeView.style"
 import {EvilIcons, FontAwesome5} from '@expo/vector-icons';
 import RecipeListItem from "./Components/RecipeListItem";
 import recipeStore from "../../Stores/RecipeStore";
-
+import {observer} from "mobx-react";
 
 function HomeView({navigation}) {
     const [recipes, setRecipes] = useState(recipeStore.recipes);
-    console.log(recipes);
-
     function inputOnChange(e) {
         const result = recipeStore.recipes
             .filter(({headerTitle}) => {
@@ -43,7 +41,8 @@ function HomeView({navigation}) {
                                           key={item.id}
                                           onPress={() => navigation.navigate('MainRecipe', {
                                               itemIndex: index,
-                                              recipe: item
+                                              recipe: item,
+                                              key: 'MainRecipe'
                                           })}/>)}
                       keyExtractor={(item) => item.id}
                       contentContainerStyle={{flexGrow: 1}}
@@ -61,4 +60,5 @@ const AddRecipeButton = ({onPress, title}) => (
     </TouchableOpacity>
 );
 
-export default HomeView;
+export default observer(HomeView);
+
