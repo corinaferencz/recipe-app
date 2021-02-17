@@ -29,7 +29,7 @@ function MainRecipe({route, navigation}) {
     const {newItem, recipe, editItem} = route?.params;
 
     const [state, setState] = useState(recipe ||
-        {imgUri: "", headerTitle: "", contentText: "", ingredients: [], preparationTime: "", cookingTime: ""});
+        {imgUri: "", headerTitle: "", contentText: "", ingredients: [], preparationTime: "", cookingTime: "", noOfStars: 0});
 
     const [isHighlighted, setIsHighlighted] = useState(false);
 
@@ -108,11 +108,18 @@ function MainRecipe({route, navigation}) {
                                     style={{paddingLeft: 5}}>{recipeStore.userDetails.firstName + " " + recipeStore.userDetails.surname}</Text>
                             </View>
                             <View style={styles.rowContainer}>
-                                {new Array(5).fill(false)
-                                    .fill(true, 0, recipe?.noOfStars || 0)
-                                    .map(e => <MaterialIcons name={e === true ? "star-rate" : "star-border"}
-                                                             size={18}
-                                                             color="#fa724c"/>)}
+                                {editItem ? [...Array(5)].map((e, i) =>
+                                        <TouchableOpacity onPress={() => setState({...state, noOfStars: i + 1})}>
+                                            <MaterialIcons name={ i < state.noOfStars ? "star-rate" : "star-border"}
+                                                           size={18}
+                                                           color="#fa724c"/>
+                                        </TouchableOpacity>
+                                    ) :
+                                    new Array(5).fill(false)
+                                        .fill(true, 0, state.noOfStars)
+                                        .map(e => <MaterialIcons name={e === true ? "star-rate" : "star-border"}
+                                                                 size={18}
+                                                                 color="#fa724c"/>)}
                             </View>
                         </View>
                     </View>
