@@ -15,7 +15,7 @@ function HomeView({navigation}) {
                 e = e.toUpperCase();
                 return headerTitle.includes(e)
             });
-        setRecipes(result)
+        setRecipes(result) //recipeStore.recipes = result
     }
 
     const listEmptyComponent = () => (
@@ -24,6 +24,7 @@ function HomeView({navigation}) {
         </View>
     );
 
+    console.log("It renderes whenever an item is added");
     return (
         <View style={styles.container}>
             <View style={styles.search}>
@@ -33,7 +34,7 @@ function HomeView({navigation}) {
                            onChangeText={inputOnChange}
                 />
             </View>
-            <FlatList data={recipes}
+            <FlatList data={JSON.parse(JSON.stringify(recipeStore.recipes))}
                       renderItem={({item, index}) => (
                           <RecipeListItem item={item}
                                           setRecipes={setRecipes}

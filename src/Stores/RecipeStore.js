@@ -10,7 +10,7 @@ class RecipeStore {
     constructor() {
         AsyncStorage.getItem("recipeList").then((res) => {
             this.recipes = JSON.parse(res) || []
-        })
+        }).catch((error) => {console.log('async error constructor',error)})
     }
 
     addItem = (item) => {
