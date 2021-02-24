@@ -24,6 +24,7 @@ function HomeView({navigation}) {
         </View>
     );
 
+
     console.log("It renders whenever an item is added");
     return (
         <View style={styles.container}>

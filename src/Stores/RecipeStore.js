@@ -4,13 +4,21 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
 class RecipeStore {
-    userDetails = {firstName: "Corina", surname: "Ferencz"}
+    @observable userDetails = {username: "", imgUri:""};
     @observable recipes = [];
 
     constructor() {
         AsyncStorage.getItem("recipeList").then((res) => {
             this.recipes = JSON.parse(res) || []
         }).catch((error) => {console.log('async error constructor',error)})
+        AsyncStorage.getItem("user").then((res) => {
+            this.userDetails = JSON.parse(res) || []
+        }).catch((error) => {console.log('async error constructor',error)})
+    }
+
+    addUser = (user) => {
+        this.userDetails = {username: user.username, imgUri: user.imgUri};
+        console.log(this.userDetails);
     }
 
     addItem = (item) => {

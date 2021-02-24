@@ -102,10 +102,10 @@ function MainRecipe({route, navigation}) {
                         </View>
                         <View sytyle={styles.columnContainer}>
                             <View style={styles.rowContainer}>
-                                <Image style={styles.userImage}
-                                       source={require("../../../assets/images/user.png")}/>
+                                <ImageBackground style={styles.userImage}
+                                       source={recipeStore.userDetails.imgUri}/>
                                 <Text
-                                    style={{paddingLeft: 5}}>{recipeStore.userDetails.firstName + " " + recipeStore.userDetails.surname}</Text>
+                                    style={{paddingLeft: 5}}>{recipeStore.userDetails.username}</Text>
                             </View>
                             <View style={styles.rowContainer}>
                                 {editItem ? [...Array(5)].map((e, i) =>
