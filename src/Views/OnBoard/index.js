@@ -13,7 +13,7 @@ import {SimpleLineIcons} from "@expo/vector-icons";
 import {homeViewStyles as styles} from "../HomeView/HomeView.style";
 import recipeStore from "../../Stores/RecipeStore";
 
-function OnBoard() {
+function OnBoard({navigation}) {
 
     const [state, setState] = useState({username:"", imgUri:""});
 
@@ -57,7 +57,7 @@ function OnBoard() {
             </View>
             <NextButton title="Next" onPress={() => {
                 recipeStore.addUser({...state})
-                recipeStore.userRegistered = true;
+                navigation.navigate('HomeView')
             }}/>
         </KeyboardAvoidingView>
     )
