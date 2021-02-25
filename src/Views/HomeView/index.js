@@ -24,6 +24,7 @@ function HomeView({navigation}) {
         </View>
     );
 
+    console.log("It renders whenever an item is added");
     return (
         <View style={styles.container}>
             <View style={styles.search}>
@@ -33,7 +34,7 @@ function HomeView({navigation}) {
                            onChangeText={inputOnChange}
                 />
             </View>
-            <FlatList data={recipes}
+            <FlatList data={recipeStore.recipes}
                       renderItem={({item, index}) => (
                           <RecipeListItem item={item}
                                           setRecipes={setRecipes}

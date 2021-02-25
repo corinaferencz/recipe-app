@@ -26,7 +26,7 @@ import * as ImagePicker from 'expo-image-picker';
 import {observer} from "mobx-react";
 
 function MainRecipe({route, navigation}) {
-    const {newItem, recipe, editItem} = route?.params;
+    const {newItem, recipe, editItem, itemIndex} = route?.params;
 
     const [state, setState] = useState(recipe ||
         {imgUri: "", headerTitle: "", contentText: "", ingredients: [], preparationTime: "", cookingTime: "", noOfStars: 0});
@@ -227,7 +227,7 @@ function MainRecipe({route, navigation}) {
                     <Button title={"Save recipe"} onPress={e => {
                         const {imgUri, contentText, headerTitle, ingredients} = {...state};
                         if (imgUri && contentText && headerTitle && ingredients.length) {
-                            newItem ? recipeStore.addItem({...state}) : recipeStore.updateItem({...state});
+                            newItem ? recipeStore.addItem({...state}) : recipeStore.updateItem(itemIndex, {...state});
                             navigation.goBack();
                         } else {
                             Alert.alert(
