@@ -101,11 +101,11 @@ function MainRecipe({route, navigation}) {
                             <Text style={{fontSize: 13, color: "#fa724c"}}>You add too!</Text>
                         </View>
                         <View sytyle={styles.columnContainer}>
-                            <View style={styles.rowContainer}>
-                                <Image style={styles.userImage}
-                                       source={require("../../../assets/images/user.png")}/>
-                                <Text
-                                    style={{paddingLeft: 5}}>{recipeStore.userDetails.firstName + " " + recipeStore.userDetails.surname}</Text>
+                            <View style={{flexDirection: "row",
+                                marginTop: 5}}>
+                                <ImageBackground style={styles.userImage}
+                                       source={{uri: recipeStore.userDetails.imgUri}}/>
+                                <Text style={{marginLeft: 5}}>{recipeStore.userDetails.username}</Text>
                             </View>
                             <View style={styles.rowContainer}>
                                 {editItem ? [...Array(5)].map((e, i) =>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {TextInput, Text, View, FlatList, TouchableOpacity} from "react-native";
 import {homeViewStyles as styles} from "./HomeView.style"
 import {EvilIcons, FontAwesome5} from '@expo/vector-icons';
@@ -24,6 +24,10 @@ function HomeView({navigation}) {
         </View>
     );
 
+    useEffect(() => {
+        setRecipes(recipeStore.recipes)
+    },[recipeStore.recipes])
+
     console.log("It renders whenever an item is added");
     return (
         <View style={styles.container}>
@@ -34,7 +38,7 @@ function HomeView({navigation}) {
                            onChangeText={inputOnChange}
                 />
             </View>
-            <FlatList data={recipeStore.recipes}
+            <FlatList data={recipes}
                       renderItem={({item, index}) => (
                           <RecipeListItem item={item}
                                           setRecipes={setRecipes}
