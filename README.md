@@ -11,11 +11,14 @@ Of course, let’s not forget about our cat (Salty 🐱) who is popping up from 
 
 ## Expo Demo
 
-## Features
-
 ## Technical
-It was tested on iPhone 5s.
+- Agile Kanban/Developer Anarchy
+- JavaScript 
+- Frameworks: Expo, React Native
+- Local storage is accessed through React Native
+- Global store - Redux store
 
+It was tested on iPhone 5s.
 
 ---------
 **This app is dedicated for those who bring soul to the recipes.**
