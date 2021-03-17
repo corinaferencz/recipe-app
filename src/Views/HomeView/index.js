@@ -3,11 +3,16 @@ import {TextInput, Text, View, FlatList, TouchableOpacity} from "react-native";
 import {homeViewStyles as styles} from "./HomeView.style"
 import {EvilIcons, FontAwesome5} from '@expo/vector-icons';
 import RecipeListItem from "./Components/RecipeListItem";
-import recipeStore from "../../Stores/RecipeStore";
-import {observer} from "mobx-react";
+import {recipeStore} from "../../Stores/RecipeStore";
+import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {SET_INITIAL} from "../../Stores/RecipeItems";
 
 function HomeView({navigation}) {
-    const [recipes, setRecipes] = useState(recipeStore.recipes);
+
+    const recipes = useSelector(state => state);
+    const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+
     function inputOnChange(e) {
         const result = recipeStore.recipes
             .filter(({headerTitle}) => {
@@ -15,8 +20,20 @@ function HomeView({navigation}) {
                 e = e.toUpperCase();
                 return headerTitle.includes(e)
             });
-        setRecipes(result)
+        setFilteredRecipes(result)
     }
+
+    useEffect(() => {
+        AsyncStorage.getItem("recipeList").then((res) => {
+            const parsedResponse = JSON.parse(res) || [];
+            recipeStore.recipes = parsedResponse
+            setInitial(parsedResponse)
+            setFilteredRecipes(parsedResponse)
+        }).catch((error) => {console.log('async error constructor',error)})
+    },[])
+
+    const dispatch = useDispatch()
+    const setInitial = item => dispatch({ type: SET_INITIAL, payload: item })
 
     const listEmptyComponent = () => (
         <View style={styles.listEmptyContainer}>
@@ -24,11 +41,8 @@ function HomeView({navigation}) {
         </View>
     );
 
-    useEffect(() => {
-        setRecipes(recipeStore.recipes)
-    },[recipeStore.recipes])
+    console.log("It renders whenever an item is added", recipes);
 
-    console.log("It renders whenever an item is added");
     return (
         <View style={styles.container}>
             <View style={styles.search}>
@@ -38,10 +52,10 @@ function HomeView({navigation}) {
                            onChangeText={inputOnChange}
                 />
             </View>
-            <FlatList data={recipes}
+            <FlatList data={filteredRecipes}
                       renderItem={({item, index}) => (
                           <RecipeListItem item={item}
-                                          setRecipes={setRecipes}
+                                          setRecipes={setFilteredRecipes}
                                           itemIndex={index}
                                           key={item.id}
                                           onPress={() => navigation.navigate('MainRecipe', {
@@ -58,12 +72,11 @@ function HomeView({navigation}) {
     );
 }
 
-
 const AddRecipeButton = ({onPress, title}) => (
     <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
         <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
 );
 
-export default observer(HomeView);
+export default HomeView;
 

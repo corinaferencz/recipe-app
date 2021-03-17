@@ -5,13 +5,12 @@ import {
     ImageBackground,
     TextInput,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
 } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
-import {observer} from "mobx-react";
 import {SimpleLineIcons} from "@expo/vector-icons";
-import {homeViewStyles as styles} from "../HomeView/HomeView.style";
-import recipeStore from "../../Stores/RecipeStore";
+import {recipeStore} from "../../Stores/RecipeStore";
+import {onBoardStyle as styles} from "./OnBoard.style"
 
 function OnBoard({navigation}) {
 
@@ -30,43 +29,45 @@ function OnBoard({navigation}) {
     };
 
     return (
-        <KeyboardAvoidingView style={{flex:1, backgroundColor: "#7cc6e6", justifyContent:"center", alignItems:"center"}} behavior="padding"
+        <KeyboardAvoidingView style={styles.main} behavior="padding"
                               keyboardVerticalOffset={-35}>
-            <View style={{width:"80%", height:"80%"}}>
-                <Text style={{fontSize: 36, color: "white", marginBottom:"20%"}}>Welcome!</Text>
-                <View style={{alignSelf: 'center', width:"80%", height:"50%", alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: "lightgray", marginBottom:"10%"}}>
-                    {state.imgUri ?
-                        <ImageBackground resizeMode="cover" style={{width:"100%", height:"100%", alignItems: 'center', justifyContent: 'center'}} source={{uri: state.imgUri}}>
+            <ImageBackground source={require("../../../assets/images/onboarding.png")} style={{flex: 1}}>
+                <View style={styles.welcomeView}>
+                    <Text style={{fontSize: 36, color: "white", fontWeight:"600"}}>Welcome!</Text>
+                    <Text style={{fontSize: 18, color: "white", marginBottom:"20%"}}>Next up, pick a username.</Text>
+                    <View style={styles.userView}>
+                        {state.imgUri ?
+                            <ImageBackground resizeMode="cover" style={styles.userImage} source={{uri: state.imgUri}}>
+                                <TouchableOpacity onPress={pickImage}>
+                                    <SimpleLineIcons name="picture" size={48} color="white"/>
+                                </TouchableOpacity>
+                            </ImageBackground> :
                             <TouchableOpacity onPress={pickImage}>
                                 <SimpleLineIcons name="picture" size={48} color="white"/>
                             </TouchableOpacity>
-                        </ImageBackground> :
-                        <TouchableOpacity onPress={pickImage}>
-                            <SimpleLineIcons name="picture" size={48} color="white"/>
-                        </TouchableOpacity>
-                    }
+                        }
+                    </View>
+                    <View style={{flexDirection: "column", width: "100%"}}>
+                        <TextInput style={styles.userText}
+                                   placeholder={"@ your_username"}
+                                   placeholderTextColor="#fff"
+                                   onSubmitEditing={e => setState({...state, username: e.nativeEvent.text})}/>
+                        <View style={{height: 1, backgroundColor:"white"}}/>
+                    </View>
                 </View>
-                <View style={{flexDirection: "column", width: "100%"}}>
-                <TextInput style={{color:"white", marginBottom:"2%"}}
-                           placeholder={"@ your_username"}
-                           placeholderTextColor="#fff"
-                           onSubmitEditing={e => setState({...state, username: e.nativeEvent.text})}/>
-                           <View style={{height: 1, backgroundColor:"white"}}/>
-                </View>
-            </View>
-            <NextButton title="Next" onPress={() => {
-                recipeStore.addUser({...state})
-                navigation.navigate('HomeView')
-            }}/>
+                <NextButton title="Next" onPress={() => {
+                    recipeStore.addUser({...state})
+                    navigation.navigate('HomeView')
+                }}/>
+            </ImageBackground>
         </KeyboardAvoidingView>
     )
 }
 
 const NextButton = ({onPress, title}) => (
-    <TouchableOpacity onPress={onPress} style={{position:"absolute", bottom:20, borderWidth:2, width:"70%", height:"10%", justifyContent:"center"}}>
-        <Text style={styles.buttonText}>{title}</Text>
+    <TouchableOpacity onPress={onPress} style={styles.nextButton}>
+        <Text style={styles.nextButtonText}>{title}</Text>
     </TouchableOpacity>
 );
 
-export default observer(OnBoard);
+export default OnBoard;

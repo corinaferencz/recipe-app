@@ -1,14 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
     Text,
     View,
     ImageBackground,
-    Image,
     StatusBar,
     ScrollView,
     TextInput,
     TouchableOpacity,
-    Button,
     Alert,
     KeyboardAvoidingView
 } from "react-native";
@@ -21,11 +19,13 @@ import {
     AntDesign
 } from "@expo/vector-icons";
 import {mainRecipeStyle as styles} from "./MainRecipe.style"
-import recipeStore from "../../Stores/RecipeStore";
+import {recipeStore} from "../../Stores/RecipeStore";
 import * as ImagePicker from 'expo-image-picker';
-import {observer} from "mobx-react";
+import { useDispatch } from "react-redux";
+import {ADD_RECIPE, UPDATE} from "../../Stores/RecipeItems";
 
 function MainRecipe({route, navigation}) {
+
     const {newItem, recipe, editItem, itemIndex} = route?.params;
 
     const [state, setState] = useState(recipe ||
@@ -45,9 +45,9 @@ function MainRecipe({route, navigation}) {
         }
     };
 
-    useEffect(() => {
-        // console.log(recipeStore.recipes);
-    }, [])
+    const dispatch = useDispatch()
+    const addRecipe = item => dispatch({ type: ADD_RECIPE, payload: item })
+    const updateRecipe = item => dispatch({ type: UPDATE, payload: item})
 
     return (
         <KeyboardAvoidingView
@@ -98,28 +98,28 @@ function MainRecipe({route, navigation}) {
                                         paddingLeft: 5
                                     }}>{recipe?.noOfBookmarks || 0} added</Text>
                             </View>
-                            <Text style={{fontSize: 13, color: "#fa724c"}}>You add too!</Text>
+                            <Text style={{fontSize: 13, color: "#7fb33d"}}>You add too!</Text>
                         </View>
                         <View sytyle={styles.columnContainer}>
                             <View style={{flexDirection: "row",
                                 marginTop: 5}}>
                                 <ImageBackground style={styles.userImage}
-                                       source={{uri: recipeStore.userDetails.imgUri}}/>
+                                                 source={{uri: recipeStore.userDetails.imgUri}}/>
                                 <Text style={{marginLeft: 5}}>{recipeStore.userDetails.username}</Text>
                             </View>
                             <View style={styles.rowContainer}>
-                                {editItem ? [...Array(5)].map((e, i) =>
+                                {editItem || newItem ? [...Array(5)].map((e, i) =>
                                         <TouchableOpacity onPress={() => setState({...state, noOfStars: i + 1})}>
                                             <MaterialIcons name={ i < state.noOfStars ? "star-rate" : "star-border"}
                                                            size={18}
-                                                           color="#fa724c"/>
+                                                           color="#ff0003"/>
                                         </TouchableOpacity>
                                     ) :
                                     new Array(5).fill(false)
                                         .fill(true, 0, state.noOfStars)
                                         .map(e => <MaterialIcons name={e === true ? "star-rate" : "star-border"}
                                                                  size={18}
-                                                                 color="#fa724c"/>)}
+                                                                 color="#ff0003"/>)}
                             </View>
                         </View>
                     </View>
@@ -132,25 +132,25 @@ function MainRecipe({route, navigation}) {
                         </Text>
                         {newItem || editItem ?
                             <TextInput style={[styles.descriptionText, isHighlighted && styles.isHighlighted]}
-                                                          placeholder={"Write the description here"}
-                                                          multiline
-                                                          onFocus={() => {
-                                                              setIsHighlighted(true)
-                                                          }}
-                                                          onBlur={() => {
-                                                              setIsHighlighted(false)
-                                                          }}
-                                                          onSubmitEditing={e => setState({...state, contentText: e.nativeEvent.text})}
-                                                          blurOnSubmit={true}
+                                       placeholder={"Write the description here"}
+                                       multiline
+                                       onFocus={() => {
+                                           setIsHighlighted(true)
+                                       }}
+                                       onBlur={() => {
+                                           setIsHighlighted(false)
+                                       }}
+                                       onSubmitEditing={e => setState({...state, contentText: e.nativeEvent.text})}
+                                       blurOnSubmit={true}
                             >{editItem ? state.contentText : null}</TextInput> :
                             <Text style={styles.descriptionText}>{state.contentText}</Text>
                         }
-                        <View style={styles.rowContainer}>
-                            <View stype={{flex: 1, alignItems: "flex-start"}}>
+                        <View style={[styles.rowContainer, styles.cookTimeContainer]}>
+                            <View stype={{flex: 1}}>
                                 <View style={styles.columnContainer}>
-                                    <FontAwesome5 name="user-circle" size={18} color="#fa724c"/>
+                                    <FontAwesome5 name="user-circle" size={18} color="#7fb33d"/>
                                     <Text style={{
-                                        fontWeight: "600",
+                                        fontWeight: "500",
                                         marginTop: 5
                                     }}>{recipe?.noOfServings || 0}</Text>
                                 </View>
@@ -158,40 +158,40 @@ function MainRecipe({route, navigation}) {
                             <View style={styles.verticalDivider}/>
                             <View stype={{flex: 1, alignItems: "center"}}>
                                 <View style={styles.columnContainer}>
-                                    <MaterialCommunityIcons name="rice" size={18} color="#fa724c"/>
+                                    <MaterialCommunityIcons name="rice" size={18} color="#7fb33d"/>
                                     {newItem || editItem ?
                                         <View style={{flexDirection: "row", marginTop: 5}}>
-                                        <TextInput style={{fontWeight: "600", marginRight: 5}}
-                                                   placeholder={"0"}
-                                                   onSubmitEditing={e => setState({...state, preparationTime: e.nativeEvent.text})}
-                                                   blurOnSubmit={true}
-                                                   keyboardType={"numbers-and-punctuation"}
-                                        >{editItem ? state.preparationTime : null}</TextInput>
+                                            <TextInput style={{fontWeight: "500", marginRight: 5}}
+                                                       placeholder={"0"}
+                                                       onSubmitEditing={e => setState({...state, preparationTime: e.nativeEvent.text})}
+                                                       blurOnSubmit={true}
+                                                       keyboardType={"numbers-and-punctuation"}
+                                            >{editItem ? state.preparationTime : null}</TextInput>
                                             <Text>min</Text>
                                         </View> :
                                         <Text style={{
-                                            fontWeight: "600",
+                                            fontWeight: "500",
                                             marginTop: 5
                                         }}>{recipe?.preparationTime || 0} min</Text>
                                     }
                                 </View>
                             </View>
                             <View style={styles.verticalDivider}/>
-                            <View stype={{flex: 1, alignItems: "flex-end"}}>
+                            <View stype={{flex: 1}}>
                                 <View style={styles.columnContainer}>
-                                    <FontAwesome name="fire" size={18} color="#fa724c"/>
+                                    <FontAwesome name="fire" size={18} color="#7fb33d"/>
                                     {newItem || editItem ?
                                         <View style={{flexDirection: "row", marginTop: 5}}>
-                                        <TextInput style={{fontWeight: "600", marginRight: 5}}
-                                                   placeholder={"0"}
-                                                   onSubmitEditing={e => setState({...state, cookingTime: e.nativeEvent.text})}
-                                                   blurOnSubmit={true}
-                                                   keyboardType={"numbers-and-punctuation"}
-                                        >{editItem ? state.cookingTime : null}</TextInput>
+                                            <TextInput style={{fontWeight: "500", marginRight: 5}}
+                                                       placeholder={"0"}
+                                                       onSubmitEditing={e => setState({...state, cookingTime: e.nativeEvent.text})}
+                                                       blurOnSubmit={true}
+                                                       keyboardType={"numbers-and-punctuation"}
+                                            >{editItem ? state.cookingTime : null}</TextInput>
                                             <Text>min</Text>
                                         </View>    :
                                         <Text style={{
-                                            fontWeight: "600",
+                                            fontWeight: "500",
                                             marginTop: 5
                                         }}>{recipe?.cookingTime || 0} min</Text>
                                     }
@@ -203,31 +203,31 @@ function MainRecipe({route, navigation}) {
                     <View style={styles.sectionContainer}>
                         <Text style={{fontSize: 15, fontWeight: "600", marginBottom: 10}}>Ingredients</Text>
                         {newItem || editItem ?
-                                <View>
-                                    {state.ingredients.map(ingredient => <RenderBulletRow ingredient={ingredient} state={state} setState={setState} newItem={newItem} editItem={editItem}/>)}
-                                    <View style={{flexDirection: "row", width: 100}}>
-                                        <Text style={{color: "#fa724c", paddingRight: 5}}>{'\u2022'}</Text>
-                                        <TextInput style={styles.addIngredientTextInput} onSubmitEditing={
-                                            (e) => {
-                                                setState({
-                                                    ...state,
-                                                    ingredients: [...state.ingredients, e.nativeEvent.text]
-                                                })
-                                                e.currentTarget.clear()
-                                            }
-                                        } placeholder={"Add new"}/>
-                                    </View>
+                            <View>
+                                {state.ingredients.map(ingredient => <RenderBulletRow ingredient={ingredient} state={state} setState={setState} newItem={newItem} editItem={editItem}/>)}
+                                <View style={{flexDirection: "row", width: 100}}>
+                                    <Text style={{color: "#7fb33d", paddingRight: 5}}>{'\u2022'}</Text>
+                                    <TextInput style={styles.addIngredientTextInput} onSubmitEditing={
+                                        (e) => {
+                                            setState({
+                                                ...state,
+                                                ingredients: [...state.ingredients, e.nativeEvent.text]
+                                            })
+                                            e.currentTarget.clear()
+                                        }
+                                    } placeholder={"Add new"}/>
                                 </View>
+                            </View>
                             :
-                                recipe?.ingredients?.map(ingredient => (<RenderBulletRow ingredient={ingredient}/>))
+                            recipe?.ingredients?.map(ingredient => (<RenderBulletRow ingredient={ingredient}/>))
                         }
                     </View>
                 </ScrollView>
                 {newItem || editItem ?
-                    <Button title={"Save recipe"} onPress={e => {
+                    <TouchableOpacity style={styles.saveRecipeButton} onPress={e => {
                         const {imgUri, contentText, headerTitle, ingredients} = {...state};
                         if (imgUri && contentText && headerTitle && ingredients.length) {
-                            newItem ? recipeStore.addItem({...state}) : recipeStore.updateItem(itemIndex, {...state});
+                            newItem ? addRecipe({...state}) : updateRecipe({itemIndex, newItem: {...state}});
                             navigation.goBack();
                         } else {
                             Alert.alert(
@@ -245,7 +245,9 @@ function MainRecipe({route, navigation}) {
                             );
                         }
                     }
-                    }/> :
+                    }>
+                        <Text style={styles.saveRecipeText}>Save Recipe</Text>
+                    </TouchableOpacity> :
                     null
                 }
             </View>
@@ -265,7 +267,7 @@ const RenderBulletRow = ({ingredient, state, setState, newItem, editItem}) => {
 
     return (
         <View style={{flexDirection: 'row', marginBottom: 5}}>
-            <Text style={{color: "#fa724c"}}>{'\u2022'}</Text>
+            <Text style={{color: "#7fb33d"}}>{'\u2022'}</Text>
             <Text style={{paddingLeft: 5, color: "#99a2ab", fontSize: 13}}>{ingredient}</Text>
             {newItem || editItem ?
                 <TouchableOpacity onPress={onDeleteIngredient} style={{marginLeft: 10}}>
@@ -278,4 +280,4 @@ const RenderBulletRow = ({ingredient, state, setState, newItem, editItem}) => {
 }
 
 
-export default observer(MainRecipe);
+export default MainRecipe;

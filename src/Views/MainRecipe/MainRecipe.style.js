@@ -7,6 +7,7 @@ export const mainRecipeStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        flexDirection:"column"
     },
     upperContainer: {
         flex: 2,
@@ -16,10 +17,10 @@ export const mainRecipeStyle = StyleSheet.create({
         justifyContent: "space-between",
     },
     text: {
-        fontSize: 18,
+        fontSize: 24,
         fontWeight: "600",
         color: "#fff",
-        backgroundColor: 'rgba(52, 52, 52, 0.4)',
+        backgroundColor: 'rgba(52, 52, 52, 0.3)',
     },
     sectionContainer: {
         flex: 1,
@@ -68,13 +69,15 @@ export const mainRecipeStyle = StyleSheet.create({
     rowContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 10,
+        marginBottom: 10
+    },
+    cookTimeContainer: {
+        padding: 15
     },
     columnContainer: {
         flex: 1,
         flexDirection: "column",
-        alignItems: "center",
-
+        alignItems: "center"
     },
     horizontalDivider: {
         borderBottomColor: "#ededed",
@@ -85,5 +88,21 @@ export const mainRecipeStyle = StyleSheet.create({
     verticalDivider: {
         borderLeftColor: "#ededed",
         borderLeftWidth: 1,
+    },
+    saveRecipeButton: {
+        width: "100%",
+        height: "11%",
+        justifyContent: "center",
+        backgroundColor: "#7fb33d",
+        alignSelf: "center",
+        borderTopLeftRadius: 10,
+        borderTopEndRadius: 10
+    },
+    saveRecipeText: {
+        fontSize: 16,
+        color: "#fff",
+        fontWeight: "bold",
+        alignSelf: "center",
+        textTransform: "uppercase"
     }
 });

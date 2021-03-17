@@ -1,17 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {observable} from "mobx";
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
 class RecipeStore {
-    @observable userDetails = {username: "", imgUri:""};
-    @observable selectors = {userRegistered: false};
-    @observable recipes = [];
+    userDetails = {username: "", imgUri:""};
+    selectors = {userRegistered: false};
+    recipes = [];
 
     constructor() {
-        AsyncStorage.getItem("recipeList").then((res) => {
-            this.recipes = JSON.parse(res) || []
-        }).catch((error) => {console.log('async error constructor',error)})
         AsyncStorage.getItem("user").then((res) => {
             this.userDetails = JSON.parse(res) || {}
         }).catch((error) => {console.log('async error constructor',error)})
@@ -29,13 +25,12 @@ class RecipeStore {
         this.userDetails = {username: user.username, imgUri: user.imgUri};
         AsyncStorage.setItem("user", JSON.stringify(this.userDetails));
         this.handleSelectors(true);
-
     }
 
     addItem = (item) => {
-            item.id = uuidv4();
-            this.recipes.push(item);
-            AsyncStorage.setItem("recipeList", JSON.stringify(this.recipes));
+        item.id = uuidv4();
+        this.recipes.push(item);
+        AsyncStorage.setItem("recipeList", JSON.stringify(this.recipes));
     }
 
     deleteItem = (itemIndex) => {
@@ -50,6 +45,4 @@ class RecipeStore {
     }
 }
 
-const recipeStore = new RecipeStore();
-
-export default recipeStore;
+export const recipeStore = new RecipeStore();
