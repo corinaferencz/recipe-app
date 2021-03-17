@@ -5,12 +5,13 @@ export const { width, height } = Dimensions.get("window");
 export const homeViewStyles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor:"#fff"
     },
     rowContainer: {
         flexDirection: "row",
         marginTop: 5,
         justifyContent: "space-between",
-        width: "100%"
+        width: "60%"
     },
     columnContainer: {
         flex: 1,
@@ -24,18 +25,21 @@ export const homeViewStyles = StyleSheet.create({
         justifyContent: "space-between",
     },
     food: {
-        flexDirection: "column",
+        flexDirection: "row",
         alignItems: "center",
         marginLeft: 10,
+        marginRight: 10
     },
     item: {
         flex: 1,
         flexDirection: "row",
-        padding: 20,
-        marginVertical: 8,
+        padding: 14,
+        marginVertical: 6,
         marginHorizontal: 16,
-        borderWidth: 1,
-        borderColor: 'lightgray'
+        borderWidth: 4,
+        borderColor: '#f4f4f4',
+        borderRadius: 10,
+        backgroundColor: "#fff"
     },
     search: {
         flexDirection: "row",
@@ -44,27 +48,31 @@ export const homeViewStyles = StyleSheet.create({
         padding: 15,
         marginVertical: 8,
         marginHorizontal: 16,
-        borderWidth: 1,
-        borderColor: 'lightgray'
+        borderWidth: 3,
+        borderColor: '#f4f4f4',
+        borderRadius: 10
     },
     image:{
         height: "100%",
-        width: "40%"
+        width: "30%",
+        borderRadius: 10
     },
     title: {
-        fontSize: 15,
+        fontSize: 16,
+        fontWeight: "200"
     },
     buttonContainer: {
-        width,
-        height: "7%",
+        width: "90%",
+        height: "8%",
         justifyContent: "center",
-        backgroundColor: "#fff",
-        borderWidth: 1,
-        borderColor: 'lightgray'
+        backgroundColor: "#7fb33d",
+        alignSelf: "center",
+        marginBottom: "4%",
+        borderRadius: 10,
     },
     buttonText: {
-        fontSize: 18,
-        color: "#000",
+        fontSize: 16,
+        color: "#fff",
         fontWeight: "bold",
         alignSelf: "center",
         textTransform: "uppercase"
@@ -74,5 +82,17 @@ export const homeViewStyles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center"
+    },
+    verticalDivider: {
+        borderLeftColor: "#ededed",
+        borderLeftWidth: 1,
+        height:"60%",
+        alignSelf: "center"
+    },
+    longPressView: {
+        position: "absolute",
+        flexDirection: "row",
+        right: 0,
+        backgroundColor: "#f4f4f4"
     }
 });

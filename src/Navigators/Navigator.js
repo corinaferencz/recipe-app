@@ -5,7 +5,7 @@ import {AntDesign} from "@expo/vector-icons";
 import MainRecipe from "../Views/MainRecipe";
 import HomeView from "../Views/HomeView";
 import OnBoard from "../Views/OnBoard";
-import recipeStore from "../Stores/RecipeStore";
+import {recipeStore} from "../Stores/RecipeStore";
 
 const Stack = createStackNavigator();
 
@@ -14,18 +14,21 @@ export default function Navigator() {
         <NavigationContainer>
             <Stack.Navigator>
                 {!recipeStore.selectors.userRegistered ?
-                <Stack.Screen name="OnBoard" component={OnBoard}
-                              options={{
-                                  title: "",
-                                  headerShown: true,
-                                  headerTransparent: true,
-                                  headerBackTitleVisible: false
-                              }}/> : null }
+                    <Stack.Screen name="OnBoard" component={OnBoard}
+                                  options={{
+                                      title: "",
+                                      headerShown: true,
+                                      headerTransparent: true,
+                                      headerBackTitleVisible: false
+                                  }}/>
+                    : null }
                 <Stack.Screen name="HomeView" component={HomeView}
                               options={{
+                                  headerTitleAlign: "center",
                                   headerRight: null,
                                   headerLeft: null,
-                                  gestureEnabled: false
+                                  gestureEnabled: false,
+                                  title: 'My Recipes'
                               }}/>
                 <Stack.Screen name="MainRecipe"
                               component={MainRecipe}
