@@ -19,4 +19,4 @@ Of course, let’s not forget about our cat (Salty 🐱) who is popping up from 
 It was tested on iPhone 5s.
 
 ---------
-**This app is dedicated for those who bring soul to the recipes.**
+**This app is dedicated for those who bring soul to the recipes.** 😊
