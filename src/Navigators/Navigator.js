@@ -21,7 +21,7 @@ export default function Navigator() {
                                       headerTransparent: true,
                                       headerBackTitleVisible: false
                                   }}/>
-                    : null }
+                 : null }
                 <Stack.Screen name="HomeView" component={HomeView}
                               options={{
                                   headerTitleAlign: "center",

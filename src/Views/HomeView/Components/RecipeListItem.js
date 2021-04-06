@@ -7,7 +7,7 @@ import {REMOVE_RECIPE} from "../../../Stores/RecipeItems";
 import { useDispatch } from 'react-redux'
 
 
-const RecipeListItem = ({item, onPress, itemIndex, setRecipes}) => {
+const RecipeListItem = ({item, onPress, itemIndex}) => {
 
     const {
         imgUri, headerTitle, noOfStars,
@@ -25,12 +25,7 @@ const RecipeListItem = ({item, onPress, itemIndex, setRecipes}) => {
         })
 
     function onDelete() {
-        setRecipes((prevState) => {
-            const newState = JSON.parse(JSON.stringify(prevState));
-            newState.splice(itemIndex, 1);
             removeItemFromList(itemIndex);
-            return newState
-        })
     }
 
     return (

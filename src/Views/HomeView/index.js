@@ -12,14 +12,16 @@ function HomeView({navigation}) {
 
     const recipes = useSelector(state => state);
     const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+    const [textInput, setTextInput] = useState('');
 
     function inputOnChange(e) {
-        const result = recipeStore.recipes
+        const result = recipes
             .filter(({headerTitle}) => {
                 headerTitle = headerTitle.toUpperCase();
                 e = e.toUpperCase();
                 return headerTitle.includes(e)
             });
+        setTextInput(e)
         setFilteredRecipes(result)
     }
 
@@ -31,6 +33,10 @@ function HomeView({navigation}) {
             setFilteredRecipes(parsedResponse)
         }).catch((error) => {console.log('async error constructor',error)})
     },[])
+    useEffect(() => {
+        console.log(textInput);
+        if(!textInput) { setFilteredRecipes(recipes); }
+    },[recipes])
 
     const dispatch = useDispatch()
     const setInitial = item => dispatch({ type: SET_INITIAL, payload: item })
@@ -41,7 +47,7 @@ function HomeView({navigation}) {
         </View>
     );
 
-    console.log("It renders whenever an item is added", recipes);
+    console.log("It renders whenever an item is added");
 
     return (
         <View style={styles.container}>

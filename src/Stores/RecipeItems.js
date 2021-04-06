@@ -7,6 +7,7 @@ export const SET_INITIAL = 'SET_INITIAL'
 export const UPDATE = 'UPDATE'
 
 const recipeItemsReducer = (state, action) => {
+    console.log(action);
     switch (action.type) {
         case SET_INITIAL:
             return [...action.payload]
@@ -15,7 +16,8 @@ const recipeItemsReducer = (state, action) => {
             return [...state, action.payload]
         case REMOVE_RECIPE:
             recipeStore.deleteItem(action.payload)
-            return state.filter(recipeItem => recipeItem.id !== action.payload)
+            state.splice(action.payload, 1)
+            return [...state]
         case UPDATE:
             recipeStore.updateItem(action.payload.itemIndex, action.payload.newItem)
             const newState = [...state]
