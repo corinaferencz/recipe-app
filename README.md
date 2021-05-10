@@ -1,3 +1,4 @@
+## 📝 About The Project
 Since I enjoy cooking for my hubby and our guests, I chose to build this app to make the process smoother and have my favourite recipes at hand. 
 
 Of course, let’s not forget about our cat (Salty 🐱) who is popping up from behind the table and is slamming his paw on it, while I am chopping the ingredients. He was also an excellent companion, purring, while I was building this app.
@@ -6,7 +7,7 @@ Of course, let’s not forget about our cat (Salty 🐱) who is popping up from 
 
 
 
-## Demo App
+## Demo
 ![Demo Flow](https://github.com/corinaferencz/recipe-app/blob/main/demo_app.gif)
 
 ## Technical
