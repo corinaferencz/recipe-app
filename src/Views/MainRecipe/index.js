@@ -49,6 +49,8 @@ function MainRecipe({route, navigation}) {
     const addRecipe = item => dispatch({ type: ADD_RECIPE, payload: item })
     const updateRecipe = item => dispatch({ type: UPDATE, payload: item})
 
+    const checkIfNewOrEditItem = newItem || editItem;
+
     return (
         <KeyboardAvoidingView
             style={styles.container}
@@ -57,7 +59,7 @@ function MainRecipe({route, navigation}) {
         >
             <StatusBar barStyle="light-content"/>
             <View style={styles.upperContainer}>
-                {newItem || editItem ?
+                {checkIfNewOrEditItem ?
                     <View style={[styles.image, editItem ? {backgroundColor: "transparent"} : {}]}>
                         {state.imgUri ?
                             <ImageBackground resizeMode="cover" style={styles.image} source={{uri: state.imgUri}}>
@@ -108,7 +110,7 @@ function MainRecipe({route, navigation}) {
                                 <Text style={{marginLeft: 5}}>{recipeStore.userDetails.username}</Text>
                             </View>
                             <View style={styles.rowContainer}>
-                                {editItem || newItem ? [...Array(5)].map((e, i) =>
+                                {checkIfNewOrEditItem ? [...Array(5)].map((e, i) =>
                                         <TouchableOpacity onPress={() => setState({...state, noOfStars: i + 1})}>
                                             <MaterialIcons name={ i < state.noOfStars ? "star-rate" : "star-border"}
                                                            size={18}
@@ -130,7 +132,7 @@ function MainRecipe({route, navigation}) {
                                 new Date(recipe?.originalPostDate).toUTCString() :
                                 new Date().toUTCString()}
                         </Text>
-                        {newItem || editItem ?
+                        {checkIfNewOrEditItem ?
                             <TextInput style={[styles.descriptionText, isHighlighted && styles.isHighlighted]}
                                        placeholder={"Write the description here"}
                                        multiline
@@ -159,7 +161,7 @@ function MainRecipe({route, navigation}) {
                             <View stype={{flex: 1, alignItems: "center"}}>
                                 <View style={styles.columnContainer}>
                                     <MaterialCommunityIcons name="rice" size={18} color="#7fb33d"/>
-                                    {newItem || editItem ?
+                                    {checkIfNewOrEditItem ?
                                         <View style={{flexDirection: "row", marginTop: 5}}>
                                             <TextInput style={{fontWeight: "500", marginRight: 5}}
                                                        placeholder={"0"}
@@ -180,7 +182,7 @@ function MainRecipe({route, navigation}) {
                             <View stype={{flex: 1}}>
                                 <View style={styles.columnContainer}>
                                     <FontAwesome name="fire" size={18} color="#7fb33d"/>
-                                    {newItem || editItem ?
+                                    {checkIfNewOrEditItem ?
                                         <View style={{flexDirection: "row", marginTop: 5}}>
                                             <TextInput style={{fontWeight: "500", marginRight: 5}}
                                                        placeholder={"0"}
@@ -202,9 +204,9 @@ function MainRecipe({route, navigation}) {
                     <View style={styles.horizontalDivider}/>
                     <View style={styles.sectionContainer}>
                         <Text style={{fontSize: 15, fontWeight: "600", marginBottom: 10}}>Ingredients</Text>
-                        {newItem || editItem ?
+                        {checkIfNewOrEditItem ?
                             <View>
-                                {state.ingredients.map(ingredient => <RenderBulletRow ingredient={ingredient} state={state} setState={setState} newItem={newItem} editItem={editItem}/>)}
+                                {state.ingredients.map(ingredient => <RenderBulletRow ingredient={ingredient} state={state} setState={setState} checkIfNewOrEditItem={checkIfNewOrEditItem} />)}
                                 <View style={{flexDirection: "row", width: 100}}>
                                     <Text style={{color: "#7fb33d", paddingRight: 5}}>{'\u2022'}</Text>
                                     <TextInput style={styles.addIngredientTextInput} onSubmitEditing={
@@ -223,7 +225,7 @@ function MainRecipe({route, navigation}) {
                         }
                     </View>
                 </ScrollView>
-                {newItem || editItem ?
+                {checkIfNewOrEditItem ?
                     <TouchableOpacity style={styles.saveRecipeButton} onPress={e => {
                         const {imgUri, contentText, headerTitle, ingredients} = {...state};
                         if (imgUri && contentText && headerTitle && ingredients.length) {
@@ -256,7 +258,7 @@ function MainRecipe({route, navigation}) {
 }
 
 
-const RenderBulletRow = ({ingredient, state, setState, newItem, editItem}) => {
+const RenderBulletRow = ({ingredient, state, setState, checkIfNewOrEditItem}) => {
 
     function onDeleteIngredient() {
         let ingredients = [...state.ingredients];
@@ -269,7 +271,7 @@ const RenderBulletRow = ({ingredient, state, setState, newItem, editItem}) => {
         <View style={{flexDirection: 'row', marginBottom: 5}}>
             <Text style={{color: "#7fb33d"}}>{'\u2022'}</Text>
             <Text style={{paddingLeft: 5, color: "#99a2ab", fontSize: 13}}>{ingredient}</Text>
-            {newItem || editItem ?
+            {checkIfNewOrEditItem ?
                 <TouchableOpacity onPress={onDeleteIngredient} style={{marginLeft: 10}}>
                     <AntDesign name="delete" size={16} color="gray"/>
                 </TouchableOpacity> :
