@@ -14,7 +14,7 @@ function HomeView({navigation}) {
     const [filteredRecipes, setFilteredRecipes] = useState(recipes);
     const [textInput, setTextInput] = useState('');
 
-    function inputOnChange(e) {
+    function handleChange(e) {
         const result = recipes
             .filter(({headerTitle}) => {
                 headerTitle = headerTitle.toUpperCase();
@@ -55,7 +55,7 @@ function HomeView({navigation}) {
                 <EvilIcons name="search" size={24} color="gray"/>
                 <TextInput color="gray"
                            placeholder={"SEARCH"}
-                           onChangeText={inputOnChange}
+                           onChangeText={handleChange}
                 />
             </View>
             <FlatList data={filteredRecipes}
